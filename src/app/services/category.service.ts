@@ -8,7 +8,7 @@ import { CategorieCredit, FrAss } from '../models/category';
   providedIn: 'root'
 })
 export class CategoryService {
-  private rootUrl = 'http://localhost:3331/api/categorieCredit';
+  private rootUrl = 'https://backendsimteg-production.up.railway.app/api/categorieCredit';
 
   constructor(private http: HttpClient) {}
 

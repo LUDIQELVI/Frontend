@@ -25,7 +25,7 @@ export interface RoleUpdateRequest {
   providedIn: 'root',
 })
 export class UserManagementService {
-  private baseUrl = 'http://localhost:3331/auth/admin';
+  private baseUrl = 'https://backendsimteg-production.up.railway.app/auth/admin';
 
   constructor(private http: HttpClient) {}
 

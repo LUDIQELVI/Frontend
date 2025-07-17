@@ -8,7 +8,7 @@ import { TauxUsure, TauxUsureDto, HistoriqueTauxUsure } from '../models/taux-usu
   providedIn: 'root'
 })
 export class TauxUsureService {
-  private rootUrl = 'http://localhost:3331/api/tauxUsure';
+  private rootUrl = 'https://backendsimteg-production.up.railway.app/api/tauxUsure';
 
   constructor(private http: HttpClient) {}
 

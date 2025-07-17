@@ -56,7 +56,7 @@ export interface RoleUpdateRequest {
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = 'http://localhost:3331/auth';
+  private baseUrl = 'https://backendsimteg-production.up.railway.app/auth';
   private usersUpdated$ = new BehaviorSubject<void>(undefined); // Trigger for user list refresh
 
   constructor(

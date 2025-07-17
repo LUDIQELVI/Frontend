@@ -8,7 +8,7 @@ import { AuthenticationRequest, AuthenticationResponse } from '../service/models
   providedIn: 'root'
 })
 export class CustomAuthenticationService {
-  private readonly apiUrl = 'http://localhost:3331/auth/login'; // Ajustez l'URL selon votre configuration
+  private readonly apiUrl = 'https://backendsimteg-production.up.railway.app/auth/login'; // Ajustez l'URL selon votre configuration
 
   constructor(private http: HttpClient) {}
 

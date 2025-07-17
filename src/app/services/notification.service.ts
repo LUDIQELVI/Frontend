@@ -19,7 +19,7 @@ export interface AppNotification {
   providedIn: 'root'
 })
 export class NotificationService {
-  private apiUrl = 'http://localhost:3331/api/notification';
+  private apiUrl = 'https://backendsimteg-production.up.railway.app/api/notification';
 
   private notificationCountSubject = new BehaviorSubject<number>(0);
   notificationCount$ = this.notificationCountSubject.asObservable();

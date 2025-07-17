@@ -14,7 +14,7 @@ export class AuthServiceService {
   private readonly REFRESH_TOKEN_KEY = 'refresh_token';
   private readonly USER_KEY = 'current_user';
   private readonly PHOTO_URL_KEY = 'user_photo_url';
-  private readonly API_URL = 'http://localhost:3331';
+  private readonly API_URL = 'https://backendsimteg-production.up.railway.app'; 
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
