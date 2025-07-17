@@ -1,0 +1,92 @@
+<app-admin-header></app-admin-header>
+
+<div class="main-content">
+  <div class="container">
+    <h2>Gestion des catégories de crédit</h2>
+    <p class="intro-text">Créez, modifiez ou supprimez des catégories de crédit et leurs taux d'usure.</p>
+
+    <div class="actions">
+      <mat-form-field appearance="outline" class="search-bar">
+        <mat-label>Nom</mat-label>
+        <input matInput [(ngModel)]="searchTerm" (ngModelChange)="filterCategories()" placeholder="Rechercher..."/>
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="isLoading" class="text-center my-8">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <table mat-table [dataSource]="filteredCategories" class="mat-elevation-z8" *ngIf="!isLoading && filteredCategories.length">
+      <ng-container matColumnDef="nom">
+        <th mat-header-cell *matHeaderCellDef>Nom</th>
+        <td mat-cell *matCellDef="let category">{{ category.nomCategorie }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let category">{{ category.description }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="frais">
+        <th mat-header-cell *matHeaderCellDef>Frais</th>
+        <td mat-cell *matCellDef="let category">{{ getFraisDisplay(category.fraisObligatoire) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="assurances">
+        <th mat-header-cell *matHeaderCellDef>Assurances</th>
+        <td mat-cell *matCellDef="let category">{{ getAssurancesDisplay(category.assurances) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="tauxUsure">
+        <th mat-header-cell *matHeaderCellDef>Taux d'usure</th>
+        <td mat-cell *matCellDef="let category">
+          <div *ngIf="category.id !== undefined && tauxUsures[category.id]?.length">
+            <div *ngFor="let taux of tauxUsures[category.id]">
+              {{ taux.typeEmprunteur }}: {{ taux.tauxUsure | number:'1.2-2' }}%
+            </div>
+          </div>
+          <span *ngIf="category.id === undefined || !tauxUsures[category.id]?.length">Aucun</span>
+          <button mat-icon-button (click)="category.id !== undefined && openTauxUsureDialog(category.id)" matTooltip="Ajouter un taux d'usure">
+            <mat-icon>add</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let category">
+          <button mat-icon-button color="primary" (click)="openEditDialog(category)" matTooltip="Modifier">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <div *ngIf="!isLoading && !filteredCategories.length" class="no-data">
+      Aucune catégorie trouvée. Créez une nouvelle catégorie pour commencer !
+    </div>
+<!-- 
+    <button mat-fab color="primary" class="fab" (click)="openCreateDialog()" matTooltip="Créer une catégorie">
+      <mat-icon>add</mat-icon>
+    </button> -->
+
+
+    <button
+    mat-fab
+    color="primary"
+    class="fab-button"
+    matTooltip="Nouvelle Simulation"
+    (click)="openCreateDialog()"
+    aria-label="Creer une categorie de credit"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+  </div>
+</div> 

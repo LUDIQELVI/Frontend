@@ -1,0 +1,244 @@
+<!-- Header -->
+<nav class="nav-wrapper" [ngClass]="{'fixed': navbarfixed, 'nofixed': !navbarfixed}">
+  <div class="container">
+    <a href="/home" class="brand-logo">
+      <img src="assets/images/logo.png" alt="SimTEG Logo" />
+    </a>
+    <a href="#" class="sidenav-trigger" data-target="mobile-links">
+      <i class="material-icons">menu</i>
+    </a>
+    <ul class="right hide-on-med-and-down">
+      <li><a routerLink="/home" fragment="home">Accueil</a></li>
+      <ng-container>
+<li><a (click)="openLoginModal()" role="button" aria-label="Open login modal">Se connecter</a></li>
+  <li><a (click)="openSigninModal()" role="button" aria-label="Open signup modal">Inscrivez-vous Des Maintenant</a></li>
+      </ng-container>
+      <li class="right">
+        <a (click)="startSimulation()" class="btn waves-effect waves-light btn-large">
+          Commencer une simulation
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Sidebar -->
+<ul class="sidenav" id="mobile-links">
+  <li><a routerLink="/home" fragment="home">Accueil</a></li>
+  <ng-container >
+<li><a (click)="openLoginModal()" role="button" aria-label="Open login modal">Se connecter</a></li>
+  <li><a (click)="openSigninModal()" role="button" aria-label="Open signup modal">Inscrivez-vous Des Maintenant</a></li>
+  </ng-container>
+
+</ul>
+
+<!-- Home Section -->
+<section id="home" class="section home-section">
+  <div class="container">
+    <div class="content-wrapper">
+      <div class="text-content">
+        <h1>Simulez vos prêts en toute simplicité</h1>
+        <div class="machineaecrire">
+          Calculez votre TEG rapidement
+        </div>
+        <p class="intro-text">
+          SimTEG vous permet de simuler le Taux Effectif Global de vos prêts au Cameroun. Inscrivez-vous pour personnaliser, sauvegarder et exporter vos simulations.
+        </p>
+        <div class="cta-buttons">
+          <a *ngIf="!isAuthenticated" (click)="openSigninModal()" class="btn waves-effect waves-light btn-large">
+            Inscrivez-vous maintenant
+          </a>
+        </div>
+      </div>
+      <img
+        src="assets/images/home-image.avif"
+        alt="Simulation TEG"
+        class="calculator-img"
+        width="400"
+        height="400"
+      />
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="section features-section">
+  <div class="container">
+    <h2 class="center-align">Pourquoi utiliser SimTEG ?</h2>
+    <div class="row">
+      <div class="col s12 m4">
+        <div class="feature-card center-align">
+          <i class="material-icons large">edit</i>
+          <h5>Créer une Simulation</h5>
+          <p>Adaptez vos simulations selon vos besoins spécifiques dès maintenant.</p>
+        </div>
+      </div>
+      <div class="col s12 m4">
+        <div class="feature-card center-align">
+          <i class="material-icons large">save</i>
+          <h5>Sauvegarde</h5>
+          <p>Enregistrez vos simulations pour les consulter ou modifier plus tard.</p>
+        </div>
+      </div>
+      <div class="col s12 m4">
+        <div class="feature-card center-align">
+          <i class="material-icons large">file_download</i>
+          <h5>Exportation</h5>
+          <p>Exportez vos résultats pour les partager ou les analyser pour plus tard.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works Section -->
+<section id="how-it-works" class="section how-it-works-section">
+  <div class="container">
+    <h2 class="center-align">Comment ça fonctionne ?</h2>
+    <div class="row">
+      <div class="col s12 m4">
+        <div class="step center-align">
+          <div class="step-number">1</div>
+          <h5>Sélectionnez une catégorie</h5>
+          <p>Choisissez le type de crédit immobilier adapté à votre projet.</p>
+        </div>
+      </div>
+      <div class="col s12 m4">
+        <div class="step center-align">
+          <div class="step-number">2</div>
+          <h5>Personnalisez votre simulation</h5>
+          <p>Ajustez les paramètres comme le montant, la durée et le taux.</p>
+        </div>
+      </div>
+      <div class="col s12 m4">
+        <div class="step center-align">
+          <div class="step-number">3</div>
+          <h5>Enregistrez et exportez</h5>
+          <p>Sauvegardez vos résultats ou exportez-les pour une analyse approfondie.</p>
+        </div>
+      </div>
+    </div>
+    <div class="center-align">
+      <a (click)="openSigninModal()" class="btn waves-effect waves-light btn-large">
+        Inscrivez-vous maintenant
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Additional Features Section -->
+<section id="features" class="section features-section">
+  <div class="container">
+    <h2 class="center-align">Démarrez Votre Simulation avec SimTEG !</h2>
+    <p class="center-align flow-text">Créez, personnalisez et analysez vos simulations en quelques clics. Lancez-vous dès maintenant pour découvrir une expérience intuitive et puissante !</p>
+    <div class="row">
+      <div class="col s12 m4">
+        <div class="feature-card center-align">
+          <i class="material-icons large">edit</i>
+          <h5>Créez Facilement</h5>
+          <p>Personnalisez vos simulations selon vos besoins en quelques minutes. Commencez dès aujourd'hui !</p>
+        </div>
+      </div>
+      <div class="col s12 m4">
+        <div class="feature-card center-align">
+          <i class="material-icons large">save</i>
+          <h5>Sauvegardez en Toute Simplicité</h5>
+          <p>Conservez vos simulations pour y revenir ou les modifier à tout moment.</p>
+        </div>
+      </div>
+      <div class="col s12 m4">
+        <div class="feature-card center-align">
+          <i class="material-icons large">file_download</i>
+          <h5>Exportez Vos Résultats</h5>
+          <p>Partagez ou analysez vos données facilement avec des exports rapides et pratiques.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row center-align">
+      <a (click)="startSimulation()" class="btn waves-effect waves-light btn-large">
+        Commencer une simulation
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Team Section -->
+<section id="team" class="section team-section">
+  <div class="container">
+    <h2 class="center-align">Notre équipe</h2>
+    <div class="row">
+      <div class="col s12 m6">
+        <div class="card">
+          <div class="card-content center-align">
+            <img
+              src="https://ui-avatars.com/api/?name=Ayo+Akoa&size=150&background=1976D2&color=fff"
+              alt="Ayo Akoa"
+              class="circle responsive-img"
+              width="150"
+              height="150"
+            />
+            <h5>AYO AKOA</h5>
+            <p>Développeur Frontend</p>
+            <div class="social-links">
+              <a href="#" class="black-text"><i class="material-icons">link</i></a>
+              <a href="#" class="black-text"><i class="material-icons">email</i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col s12 m6">
+        <div class="card">
+          <div class="card-content center-align">
+            <img
+              src="https://ui-avatars.com/api/?name=Tonfanck+Elvira&size=150&background=1976D2&color=fff"
+              alt="TONFACK MATENGUE"
+              class="circle responsive-img"
+              width="150"
+              height="150"
+            />
+            <h5>TONFACK Elvira</h5>
+            <p>Développeur Backend</p>
+            <div class="social-links">
+              <a href="#" class="black-text"><i class="material-icons">link</i></a>
+              <a href="#" class="black-text"><i class="material-icons">email</i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer id="contact" class="page-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col l4 s12">
+        <h5 class="black-text center">SimTEG</h5>
+        <p class="black-text center">
+          Votre solution pour simuler et comprendre le coût réel de vos prêts au Cameroun.
+        </p>
+      </div>
+      <div class="col l4 s12">
+        <h5 class="black-text center">Liens rapides</h5>
+        <ul class="center-align">
+          <li><a href="#" class="black-text">FAQ</a></li>
+          <li><a href="#" class="black-text">Politique de confidentialité</a></li>
+          <li><a href="#" class="black-text">Conditions d'utilisation</a></li>
+        </ul>
+      </div>
+      <div class="col l4 s12">
+        <h5 class="black-text center">Contactez-nous</h5>
+        <p class="black-text center">contact: simteg.com</p>
+        <p class="black-text center">+237 677 76 57 77</p>
+        <div class="center-align">
+          <a href="mailto:contact@simteg.com" class="btn waves-effect waves-light">Nous contacter</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <div class="container black-text">© 2025 SimTEG. Tous droits réservés.</div>
+  </div>
+</footer>
+

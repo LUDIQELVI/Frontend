@@ -1,0 +1,10 @@
+<ul class="sidenav sidenav-fixed z-depth-1" id="mobile-nav">
+  <li class="sidenav-header center-align">
+    <a routerLink="/home-connectee-admin"><img src="assets/images/logo.png" alt="SimTEG Logo" class="responsive-img logo-img" /></a>
+  </li>
+  <li><a routerLink="/admin/dashboard" class="waves-effect"><i class="material-icons">dashboard</i>Tableau de bord</a></li>
+  <li><a routerLink="/gerer-users" class="waves-effect"><i class="material-icons">person</i>Liste des Utilisateurs</a></li>
+  <li><a routerLink="/gerer-categorie" class="waves-effect"><i class="material-icons">dashboard</i>Gerer les Categories</a></li>
+  <li><a routerLink="/admin/profile" class="waves-effect"><i class="material-icons">person</i>Mon profil</a></li>
+  <li><a href="#" class="waves-effect" (click)="logout(); $event.preventDefault()"><i class="material-icons">exit_to_app</i>Déconnexion</a></li>
+</ul>

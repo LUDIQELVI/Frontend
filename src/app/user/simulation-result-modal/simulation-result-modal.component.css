@@ -1,0 +1,100 @@
+/* Titres */
+h2, h3, h4 {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* Sections */
+section {
+  margin-bottom: 24px;
+}
+
+/* Paragraphes et listes */
+p, ul {
+  font-size: 14px;
+  color: #34495e;
+  line-height: 1.5;
+  margin: 0 0 8px 0;
+}
+
+ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+/* Tableaux responsive */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* inertie iOS */
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px; /* largeur min pour éviter écrasement */
+}
+
+/* Angular Material shadow */
+.mat-elevation-z8 {
+  box-shadow:
+    0 3px 5px -1px rgba(0,0,0,0.2),
+    0 6px 10px 0 rgba(0,0,0,0.14),
+    0 1px 18px 0 rgba(0,0,0,0.12);
+}
+
+/* Cellules */
+.mat-header-cell, .mat-cell {
+  padding: 8px 12px;
+  text-align: right;
+  white-space: nowrap; /* évite retour à la ligne */
+  font-size: 13px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Alignement 1ère colonne à gauche */
+.mat-header-cell:first-child, .mat-cell:first-child {
+  text-align: left;
+  font-weight: 600;
+}
+
+/* Boutons */
+button {
+  margin-left: 8px;
+}
+
+/* Media Queries */
+
+/* Téléphones */
+@media (max-width: 600px) {
+  p, ul {
+    font-size: 12px;
+  }
+  .mat-header-cell, .mat-cell {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+  table {
+    min-width: 500px;
+  }
+  button {
+    margin-left: 4px;
+    font-size: 12px;
+  }
+}
+
+/* Tablettes */
+@media (min-width: 601px) and (max-width: 960px) {
+  p, ul {
+    font-size: 13px;
+  }
+  .mat-header-cell, .mat-cell {
+    font-size: 12px;
+    padding: 7px 10px;
+  }
+  table {
+    min-width: 550px;
+  }
+}

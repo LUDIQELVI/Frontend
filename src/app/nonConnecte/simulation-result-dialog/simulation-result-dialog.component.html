@@ -1,0 +1,165 @@
+<h2 mat-dialog-title>Résultats de la Simulation</h2>
+
+<mat-dialog-content>
+
+  <!-- Détails de la demande -->
+  <section>
+    <h3>Détails de la demande</h3>
+    <p><strong>Catégorie de crédit :</strong> {{ data.category }}</p>
+    <p><strong>Montant emprunté :</strong>
+      {{ decimalPipe.transform(data.request.montantEmprunte, '1.0-2') }} FCFA
+    </p>
+    <p><strong>Taux nominal :</strong>
+      {{ data.tauxNominalInitial !== undefined ? (data.tauxNominalInitial | number:'1.2-2') + ' %' : 'Non renseigné' }}
+    </p>
+    <p><strong>Durée :</strong>
+      {{ data.dureeInitiale }}
+      {{
+        data.request.frequence === 'MENSUELLE' ? 'mois' :
+        data.request.frequence === 'TRIMESTRIELLE' ? 'trimestres' :
+        data.request.frequence === 'SEMESTRIELLE' ? 'semestres' :
+        data.request.frequence === 'ANNUELLE' ? 'années' :
+        data.request.frequence
+      }}
+    </p>
+    <p><strong>Type d'emprunteur :</strong> {{ data.request.typeEprunteur }}</p>
+    <p><strong>Date de première échéance :</strong>
+      {{ datePipe.transform(data.request.datePremiereEcheance, 'dd/MM/yyyy') }}
+    </p>
+  </section>
+
+  <!-- Frais obligatoires -->
+  <section>
+    <h4>Frais obligatoires</h4>
+    <ul>
+      <li *ngFor="let frais of frais">
+        {{ frais.nom }} : {{ decimalPipe.transform(frais.montant, '1.0-2') }} FCFA
+      </li>
+      <li *ngIf="!frais.length">Aucun frais</li>
+    </ul>
+  </section>
+
+  <!-- Assurances obligatoires -->
+  <section>
+    <h4>Assurances obligatoires</h4>
+    <ul>
+      <li *ngFor="let assurance of assurances">
+        {{ assurance.nom }} : {{ decimalPipe.transform(assurance.montant, '1.0-2') }} FCFA
+      </li>
+      <li *ngIf="!assurances.length">Aucune assurance</li>
+    </ul>
+  </section>
+
+  <!-- Déblocages -->
+  <section>
+    <h4>Déblocages</h4>
+    <div class="table-responsive" *ngIf="dataSourceDeblocages?.data?.length && dataSourceDeblocages.data.length > 0; else noDebloc">
+      <table mat-table [dataSource]="dataSourceDeblocages" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="numero">
+          <th mat-header-cell *matHeaderCellDef>Numéro</th>
+          <td mat-cell *matCellDef="let d">{{ d.numero }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="dateDeblocage">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let d">
+            {{ d?.dateDeblocage ? datePipe.transform(d.dateDeblocage, 'dd/MM/yyyy') : '—' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="montant">
+          <th mat-header-cell *matHeaderCellDef>Montant</th>
+          <td mat-cell *matCellDef="let d">
+            {{ d?.montant != null ? decimalPipe.transform(d.montant, '1.0-2') + ' FCFA' : '—' }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsDeblocages"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsDeblocages;"></tr>
+      </table>
+    </div>
+    <ng-template #noDebloc>
+      <p>Aucun déblocage enregistré</p>
+    </ng-template>
+  </section>
+
+  <!-- Résultats -->
+  <section>
+    <h3>Résultats</h3>
+    <p><strong>TEG annuel :</strong>
+      {{ data.simulation.tegAnnuel != null ? (data.simulation.tegAnnuel | number:'1.2-2') + '%' : 'Non disponible' }}
+    </p>
+    <p><strong>Échéance unitaire :</strong>
+      {{ decimalPipe.transform(data.simulation.echeance, '1.0-2') || 'N/A' }} FCFA
+    </p>
+    <p><strong>Coût total du crédit :</strong>
+      {{ decimalPipe.transform(coutTotal, '1.0-2') }} FCFA
+    </p>
+  </section>
+
+  <!-- Tableau d'amortissement -->
+  <section>
+    <h3>Tableau d'amortissement</h3>
+    <div class="table-responsive" *ngIf="dataSource && dataSource.data && dataSource.data.length > 0; else noAmort">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="dateEcheance">
+          <th mat-header-cell *matHeaderCellDef> Date d'échéance </th>
+          <td mat-cell *matCellDef="let e; let i = index">
+            {{ datePipe.transform(getEcheanceDate(i), 'dd/MM/yyyy') }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="principal">
+          <th mat-header-cell *matHeaderCellDef> Capital </th>
+          <td mat-cell *matCellDef="let e">
+            {{ decimalPipe.transform(e.principal, '1.0-2') }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="interet">
+          <th mat-header-cell *matHeaderCellDef> Intérêt </th>
+          <td mat-cell *matCellDef="let e">
+            {{ decimalPipe.transform(e.interet, '1.0-2') }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="assurance">
+          <th mat-header-cell *matHeaderCellDef> Assurance </th>
+          <td mat-cell *matCellDef="let e">
+            {{ decimalPipe.transform(e.assurance, '1.0-2') }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="echeance">
+          <th mat-header-cell *matHeaderCellDef> Échéance </th>
+          <td mat-cell *matCellDef="let e">
+            {{ decimalPipe.transform(e.echeanceTotale, '1.0-2') }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="capitalRestant">
+          <th mat-header-cell *matHeaderCellDef> Capital Restant </th>
+          <td mat-cell *matCellDef="let e">
+            {{ decimalPipe.transform(e.capitalRestant, '1.0-2') }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+    </div>
+    <ng-template #noAmort>
+      <p>Aucun tableau d'amortissement disponible</p>
+    </ng-template>
+  </section>
+
+</mat-dialog-content>
+
+<!-- Actions -->
+<mat-dialog-actions align="end">
+  <button mat-button color="warn" (click)="dialogRef.close()">Fermer</button>
+  <button mat-raised-button color="primary" (click)="promptLogin()">Enregistrer</button>
+</mat-dialog-actions>

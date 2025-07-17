@@ -1,0 +1,44 @@
+/* === Contenu du dialogue === */
+mat-dialog-content {
+  font-size: 1rem;
+  color: #333;
+  padding: 20px 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+/* === Actions (boutons) === */
+mat-dialog-actions {
+  margin-top: 12px;
+  padding: 8px 16px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* === Boutons standards === */
+button {
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+/* === Responsive pour petits écrans (smartphones) === */
+@media (max-width: 480px) {
+  mat-dialog-content {
+    font-size: 0.95rem;
+    padding: 16px 12px;
+  }
+
+  mat-dialog-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  button {
+    width: 100%;
+  }
+}

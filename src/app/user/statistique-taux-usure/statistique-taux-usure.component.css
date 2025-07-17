@@ -1,0 +1,168 @@
+/* === Variables globales pour la cohérence === */
+:root {
+  --primary-color: #3f51b5; /* Bleu professionnel */
+  --accent-color: #4caf50; /* Vert pour les graphiques */
+  --background-color: #f5f7fa; /* Fond clair et neutre */
+  --text-color: #333333; /* Texte sombre pour lisibilité */
+  --error-color: #c62828; /* Rouge pour les erreurs */
+  --border-radius: 8px; /* Coins arrondis */
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Ombre subtile */
+}
+
+/* === Conteneur principal === */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  position: relative;
+  min-height: 100vh; /* Utilisation de toute la hauteur de la page */
+}
+
+/* === Contenu principal avec sidebar === */
+.main-content {
+  margin-left: 250px; /* Espace pour la sidebar */
+  padding: 80px 24px 24px; /* Espace pour le header et padding */
+  background: var(--background-color);
+  min-height: calc(100vh - 64px); /* Hauteur minimale ajustée */
+}
+
+/* === Titre principal === */
+.page-title {
+  font-size: 2rem;
+  font-weight: 500;
+    color: #1a237e;
+  margin: 0 0 16px;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* === Texte d'introduction === */
+.intro-text {
+  font-size: 1rem;
+  color: var(--text-color);
+  margin: 0 auto 24px;
+  text-align: center;
+  max-width: 800px;
+  line-height: 1.6;
+}
+
+/* === Sélection de catégorie === */
+.category-select {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 24px;
+  display: block;
+}
+
+mat-form-field .mat-form-field-label {
+  color: var(--text-color);
+}
+
+mat-form-field .mat-form-field-outline {
+  border-color: var(--primary-color);
+}
+
+/* === Section du graphique === */
+.chart-section {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+  text-align: center;
+  min-height: calc(100vh - 300px); /* Hauteur minimale pour s'étendre jusqu'en bas */
+}
+
+.chart-canvas {
+  max-width: 100%;
+  min-height: 400px; /* Hauteur minimale pour le graphique */
+  margin: 0 auto 24px;
+}
+
+/* === Commentaire du graphique === */
+.chart-comment {
+  text-align: center;
+}
+
+.comment-text {
+  font-size: 0.95rem;
+  color: var(--text-color);
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+  padding: 0 16px;
+}
+
+/* === Conteneur de chargement === */
+.loading-container {
+  text-align: center;
+  padding: 48px 0;
+}
+
+mat-spinner {
+  margin: 0 auto;
+}
+
+/* === Responsive : Mobile (max-width: 768px) === */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    padding-top: 64px;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .intro-text {
+    font-size: 0.9rem;
+    max-width: 100%;
+  }
+
+  .category-select {
+    max-width: 100%;
+  }
+
+  .chart-section {
+    min-height: calc(100vh - 200px); /* Ajustement pour mobile */
+  }
+
+  .chart-canvas {
+    min-height: 300px; /* Hauteur minimale pour mobile */
+  }
+
+  .comment-text {
+    font-size: 0.85rem;
+    padding: 0 8px;
+  }
+}
+
+/* === Responsive : Tablette (769px - 1024px) === */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .main-content {
+    margin-left: 200px; /* Sidebar plus étroite sur tablette */
+  }
+
+  .chart-section {
+    min-height: calc(100vh - 250px); /* Ajustement pour tablette */
+  }
+
+  .chart-canvas {
+    min-height: 350px; /* Hauteur minimale pour tablette */
+  }
+
+  .comment-text {
+    max-width: 600px;
+  }
+}
+
+/* === Desktop (min-width: 1025px) === */
+@media (min-width: 1025px) {
+  .chart-section {
+    min-height: calc(100vh - 300px); /* Ajustement pour desktop */
+  }
+
+  .chart-canvas {
+    min-height: 400px; /* Hauteur minimale pour desktop */
+  }
+}

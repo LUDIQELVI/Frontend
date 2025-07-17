@@ -1,0 +1,36 @@
+<app-user-header></app-user-header>
+
+<div class="container">
+  <div class="main-content">
+    <h1 class="page-title">Consulter votre profil</h1>
+
+    <div class="profile-card" *ngIf="user">
+      <div class="profile-header">
+        <div class="avatar-container">
+          <img [src]="user.photos" alt="Photo de profil" class="avatar" />
+        </div>
+        <h2 class="profile-name">{{ user.firstName || 'Utilisateur' }}</h2>
+      </div>
+
+      <div class="profile-details">
+        <div class="detail-item">
+          <mat-icon>email</mat-icon>
+          <span><strong>Email :</strong> {{ user.email || 'N/A' }}</span>
+        </div>
+        <div class="detail-item">
+          <mat-icon>phone</mat-icon>
+          <span><strong>Téléphone :</strong> {{ user.telephone || 'N/A' }}</span>
+        </div>
+        <div class="detail-item">
+          <mat-icon>cake</mat-icon>
+          <span><strong>Date de naissance :</strong> {{ user.dateNaiss || 'N/A' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!user" class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p class="loading-text">Chargement du profil...</p>
+    </div>
+  </div>
+</div>

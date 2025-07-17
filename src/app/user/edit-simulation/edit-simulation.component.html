@@ -1,0 +1,204 @@
+<app-user-header></app-user-header>
+<app-notification></app-notification>
+<main class="main-content">
+  <div class="container">
+    <h1 class="page-title">Modifier la Simulation - {{ category?.nomCategorie || 'Chargement...' }}</h1>
+    <p class="intro-text">
+      Modifiez les détails de la simulation de crédit.
+    </p>
+
+    <!-- BOUTON IMPORT FIXÉ EN BAS À DROITE -->
+    <button
+      mat-fab
+      class="fab-import-topright"
+      (click)="triggerFileInput()"
+      matTooltip="Importer un fichier Excel pour préremplir les données"
+      aria-label="Importer un fichier Excel"
+      color="primary"
+    >
+      <mat-icon>upload_file</mat-icon>
+    </button>
+    <input type="file" #fileInput (change)="importSimulation($event)" accept=".xlsx" style="display: none" />
+
+    <mat-card class="simulation-card" *ngIf="!isLoading && category">
+      <mat-card-content>
+        <form [formGroup]="simulationForm" (ngSubmit)="saveSimulation()">
+          <!-- Informations Générales -->
+          <div class="form-section">
+            <h2 class="section-title">Informations générales</h2>
+            <div class="form-grid">
+              <mat-form-field appearance="outline" class="montant">
+                <mat-label>Montant Emprunté (FCFA)</mat-label>
+                <input matInput type="number" formControlName="montant" required />
+                <mat-icon
+                  matSuffix
+                  class="info-icon"
+                  matTooltip="Montant total du prêt que vous souhaitez emprunter"
+                >info</mat-icon>
+                <mat-error *ngIf="simulationForm.get('montant')?.hasError('required')">Champ requis</mat-error>
+                <mat-error *ngIf="simulationForm.get('montant')?.hasError('min')">Montant minimum : 1 FCFA</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Fréquence des Échéances</mat-label>
+                <mat-select formControlName="frequence" required>
+                  <mat-option *ngFor="let freq of frequenceOptions" [value]="freq">{{ freq }}</mat-option>
+                </mat-select>
+                <mat-icon
+                  matSuffix
+                  class="info-icon"
+                  matTooltip="Fréquence de remboursement (mensuelle, trimestrielle, etc.)"
+                >info</mat-icon>
+                <mat-error *ngIf="simulationForm.get('frequence')?.hasError('required')">Champ requis</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Durée</mat-label>
+                <input matInput type="number" formControlName="duree" required />
+                <mat-icon
+                  matSuffix
+                  class="info-icon"
+                  matTooltip="Durée totale du crédit selon la fréquence choisie"
+                >info</mat-icon>
+                <mat-error *ngIf="simulationForm.get('duree')?.hasError('required')">Champ requis</mat-error>
+                <mat-error *ngIf="simulationForm.get('duree')?.hasError('min')">Durée minimum : 1</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Type d'Emprunteur</mat-label>
+                <mat-select formControlName="typeEmprunteur" required>
+                  <mat-option *ngFor="let type of typeEmprunteurOptions" [value]="type">{{ type }}</mat-option>
+                </mat-select>
+                <mat-icon
+                  matSuffix
+                  class="info-icon"
+                  matTooltip="Type de client : particulier, PME ou grande entreprise"
+                >info</mat-icon>
+                <mat-error *ngIf="simulationForm.get('typeEmprunteur')?.hasError('required')">Champ requis</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Taux Nominal (%)</mat-label>
+                <input matInput type="number" step="0.01" formControlName="tauxNominal" required />
+                <mat-icon
+                  matSuffix
+                  class="info-icon"
+                  matTooltip="Taux d’intérêt nominal annuel appliqué au crédit"
+                >info</mat-icon>
+                <mat-error *ngIf="simulationForm.get('tauxNominal')?.hasError('required')">Champ requis</mat-error>
+                <mat-error *ngIf="simulationForm.get('tauxNominal')?.hasError('min')">Taux minimum : 0.01%</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Date de Première Échéance</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  formControlName="dateDebut"
+                  [matDatepickerFilter]="disablePastDates"
+                  required
+                />
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-icon
+                  matSuffix
+                  class="info-icon"
+                  matTooltip="Date prévue pour le début du remboursement"
+                >info</mat-icon>
+                <mat-error *ngIf="simulationForm.get('dateDebut')?.hasError('required')">Champ requis</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!-- CHARGES -->
+          <div class="form-section">
+            <h2 class="section-title">Charges</h2>
+
+            <div class="form-grid" formArrayName="fraisObligatoires">
+              <div *ngFor="let frais of fraisObligatoires.controls; let i = index" [formGroupName]="i">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{ frais.get('nom')?.value }}</mat-label>
+                  <input matInput type="number" formControlName="montant" required />
+                  <mat-icon
+                    matSuffix
+                    class="info-icon"
+                    [matTooltip]="'Montant du ' + frais.get('nom')?.value"
+                  >info</mat-icon>
+                  <mat-error *ngIf="frais.get('montant')?.hasError('required')">Champ requis</mat-error>
+                  <mat-error *ngIf="frais.get('montant')?.hasError('min')">Montant minimum : 0 FCFA</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="form-grid" formArrayName="assurancesObligatoires">
+              <div *ngFor="let assurance of assurancesObligatoires.controls; let i = index" [formGroupName]="i">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{ assurance.get('nom')?.value }}</mat-label>
+                  <input matInput type="number" formControlName="montant" required />
+                  <mat-icon
+                    matSuffix
+                    class="info-icon"
+                    [matTooltip]="'Montant de l\'assurance : ' + assurance.get('nom')?.value"
+                  >info</mat-icon>
+                  <mat-error *ngIf="assurance.get('montant')?.hasError('required')">Champ requis</mat-error>
+                  <mat-error *ngIf="assurance.get('montant')?.hasError('min')">Montant minimum : 0 FCFA</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <!-- Déblocages -->
+          <div class="form-section">
+            <h3 class="section-title">Déblocages</h3>
+            <button type="button" class="add-button" (click)="addDeblocage()" aria-label="Ajouter un nouveau déblocage">
+              Ajouter un déblocage
+            </button>
+            <div class="form-grid deblocage-grid">
+              <ng-container formArrayName="deblocages">
+                <div *ngFor="let deblocage of deblocages.controls; let i=index" [formGroupName]="i" class="deblocage-group">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Date de déblocage {{ i + 1 }}</mat-label>
+                    <input matInput [matDatepicker]="pickerDeblocage" formControlName="dateDeblocage" [min]="minDate" placeholder="jj/mm/aaaa">
+                    <mat-datepicker-toggle matSuffix [for]="pickerDeblocage"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerDeblocage></mat-datepicker>
+                    <mat-icon matSuffix matTooltip="Date à laquelle une partie du prêt est débloquée">info</mat-icon>
+                    <mat-error *ngIf="deblocage.get('dateDeblocage')?.hasError('required')">Champ requis</mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Montant (FCFA)</mat-label>
+                    <input matInput type="number" formControlName="montant" placeholder="Montant en FCFA">
+                    <mat-icon matSuffix matTooltip="Montant débloqué à cette date">info</mat-icon>
+                    <mat-error *ngIf="deblocage.get('montant')?.hasError('required')">Champ requis</mat-error>
+                    <mat-error *ngIf="deblocage.get('montant')?.hasError('min')">Montant minimum : 1 FCFA</mat-error>
+                  </mat-form-field>
+
+                  <button mat-icon-button color="warn" (click)="removeDeblocage(i)" matTooltip="Supprimer ce déblocage" aria-label="Supprimer ce déblocage" type="button">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </ng-container>
+              <mat-error *ngIf="simulationForm.get('deblocages')?.hasError('invalidDeblocageDate')">
+                La date de déblocage doit être avant la date de première échéance.
+              </mat-error>
+            </div>
+          </div>
+
+          <!-- Boutons d'action -->
+          <div class="form-actions">
+            <button mat-raised-button color="primary" type="submit" [disabled]="isLoading || simulationForm.invalid">
+              <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+              <span *ngIf="!isLoading">Enregistrer</span>
+            </button>
+            <button mat-button type="button" (click)="cancel()">Annuler</button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <div *ngIf="isLoading" class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Chargement en cours...</p>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,40 @@
+<!-- Header -->
+<nav class="navbar z-depth-1">
+  <div class="nav-container">
+    <!-- Hamburger menu for mobile -->
+    <button type="button" class="sidenav-trigger" aria-label="Toggle menu" (click)="toggleSidebar()">
+      <i class="material-icons">menu</i>
+    </button>
+
+    <!-- Welcome text -->
+    <span class="welcome-text">BIENVENUE SUR simTEG</span>
+
+    <!-- Right-side user info and notifications -->
+    <ul class="right">
+      <li>
+        <a class="notification-icon" (click)="goToNotifications()" aria-label="Notifications">
+          <i class="material-icons">notifications</i>
+          <span class="badge" *ngIf="notificationCount > 0">{{ notificationCount }}</span>
+        </a>
+      </li>
+      <li>
+        <img [src]="photoUrl" alt="User Photo" class="circle avatar" />
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Sidebar (Sidenav) -->
+<ul class="sidenav sidenav-fixed z-depth-1" id="mobile-nav" [class.open]="sidebarOpen">
+  <li class="sidenav-header center-align">
+    <a routerLink="/home-connected">
+      <img src="assets/images/logo.png" alt="SimTEG Logo" class="responsive-img logo-img" />
+    </a>
+  </li>
+  <li><a routerLink="/user/dashboard" class="waves-effect"><i class="material-icons">dashboard</i>Tableau de bord</a></li>
+  <li><a routerLink="/user/list-simulations" class="waves-effect"><i class="material-icons">calculate</i>Mes simulations</a></li>
+  <li><a routerLink="/user/statistique-taux-usure" class="waves-effect"><i class="material-icons">bar_chart</i>Statistique</a></li>
+  <li><a routerLink="/profile" class="waves-effect"><i class="material-icons">person</i>Mon profil</a></li>
+  <li><a routerLink="/user/aide" class="waves-effect"><i class="material-icons">help</i>Aide</a></li>
+  <li><a href="#" class="waves-effect" (click)="logout(); $event.preventDefault()"><i class="material-icons">exit_to_app</i>Déconnexion</a></li>
+</ul>

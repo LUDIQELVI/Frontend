@@ -1,0 +1,44 @@
+<app-header [class.fixed]="navbarFixed"></app-header>
+
+<div class="main-content" [class.with-fixed-header]="navbarFixed">
+  <div class="container">
+    <h2 class="center-align title-blue">Choisissez une catégorie de crédit</h2>
+    <p class="center-align">Sélectionnez une catégorie pour commencer votre simulation.</p>
+
+    <mat-card *ngIf="errorMessage" class="error-card">
+      {{ errorMessage }}
+    </mat-card>
+
+    <div *ngIf="isLoadingCategories" class="center-align">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Chargement des catégories...</p>
+    </div>
+
+    <div class="grid-container" *ngIf="!isLoadingCategories">
+      <mat-card
+        class="grid-card hoverable selectable clickable"
+        *ngFor="let category of categories$ | async"
+        [ngClass]="{ 'selected-card': selectedCategoryId === category.id }"
+        (click)="category.id !== undefined && selectCategory(category.id)"
+      >
+        <mat-card-header>
+          <mat-icon mat-card-avatar>{{ getCategoryIcon(category.nomCategorie) }}</mat-icon>
+          <mat-card-title>{{ category.nomCategorie }}</mat-card-title>
+          <mat-card-subtitle>
+            {{ category.description || 'Aucune description disponible.' }}
+          </mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </div>
+
+    <div *ngIf="!(categories$ | async)?.length && !errorMessage" class="center-align">
+      <p>Aucune catégorie de crédit disponible.</p>
+    </div>
+
+    <div *ngIf="selectedCategoryId" class="fixed-action-btn-right">
+      <button mat-fab color="primary" (click)="goToSimulation()" aria-label="Go to simulation">
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

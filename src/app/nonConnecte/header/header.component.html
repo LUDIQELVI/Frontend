@@ -1,0 +1,23 @@
+<nav class="nav-wrapper" [ngClass]="{'fixed': navbarFixed, 'nofixed': !navbarFixed}">
+  <div class="container">
+    <a routerLink="/home" class="brand-logo" aria-label="Logo SimTEG">
+      <img src="/assets/images/logo.png" alt="SimTEG Logo" loading="lazy" />
+    </a>
+
+    <a href="#" class="sidenav-trigger" data-target="mobile-links" aria-label="Open mobile menu">
+      <i class="material-icons">menu</i>
+    </a>
+
+    <ul class="right hide-on-med-and-down">
+      <li><a routerLink="/home" fragment="home">Accueil</a></li>
+      <li><a (click)="openLoginModal()" role="button" aria-label="Open login modal">Se connecter</a></li>
+      <li><a (click)="openSigninModal()" role="button" aria-label="Open signup modal">Inscrivez-vous maintenant</a></li>
+    </ul>
+  </div>
+</nav>
+
+<ul class="sidenav" id="mobile-links">
+  <li><a routerLink="/home" fragment="home">Accueil</a></li>
+  <li><a (click)="openLoginModal()" role="button" aria-label="Open login modal">Se connecter</a></li>
+  <li><a (click)="openSigninModal()" role="button" aria-label="Open signup modal">S'inscrire</a></li>
+</ul>

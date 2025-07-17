@@ -1,0 +1,153 @@
+/* === GENERAL === */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* === HEADER FIXED === */
+app-user-header.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.main-content.with-fixed-header {
+  padding-top: 64px;
+}
+
+@media (max-width: 992px) {
+  .main-content.with-fixed-header {
+    padding-top: 56px;
+  }
+}
+@media (max-width: 600px) {
+  .main-content.with-fixed-header {
+    padding-top: 50px;
+  }
+}
+
+/* === MAIN CONTENT === */
+.main-content {
+  margin-left: 250px;
+  padding: 40px 24px 20px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background-color: #f5f5f5;
+  transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 992px) {
+  .main-content {
+    margin-left: 0;
+    padding: 24px 16px;
+  }
+}
+
+/* === CONTAINER === */
+.container {
+  max-width: 1200px;
+  width: 100%;
+}
+
+/* === TITRE PRINCIPAL === */
+.title-blue {
+  color: #003366;
+  margin-top: 50px;
+  margin-bottom: 8px;
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .title-blue {
+    font-size: 1.5rem;
+  }
+}
+
+.center-align {
+  text-align: center;
+}
+
+/* === GRID DES CATÉGORIES === */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.grid-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 140px;
+  padding: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.grid-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.grid-card mat-card-header {
+  padding-bottom: 8px;
+}
+
+.grid-card mat-card-title,
+.grid-card mat-card-subtitle {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+.selected-card {
+  border: 2px solid #3f51b5;
+  background-color: #e8eaf6;
+}
+
+/* === SPINNER & MESSAGE D'ERREUR === */
+.error-card {
+  margin: 20px auto;
+  max-width: 600px;
+  color: #d32f2f;
+  background-color: #fdecea;
+  border-left: 5px solid #f44336;
+  padding: 16px;
+}
+
+.center-align mat-spinner {
+  margin-bottom: 8px;
+}
+
+/* === BOUTON FLOTTANT === */
+.fixed-action-btn-right {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+}
+
+@media (max-width: 600px) {
+  .fixed-action-btn-right {
+    bottom: 16px;
+    right: 16px;
+  }
+}

@@ -1,0 +1,261 @@
+.main-content {
+  margin-left: 250px;
+  padding: 20px;
+  min-height: calc(100vh - 64px);
+  background-color: #f5f7fa;
+  color: #2a2a2a;
+  transition: margin-left 0.3s ease;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+  flex-grow: 1;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1a237e;
+  margin-bottom: 24px;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 9%;
+}
+
+.intro-text {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  color: #555;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.filter-field {
+  width: 100%;
+}
+
+.text-center.my-8 {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.text-center.my-8 .mat-spinner {
+  width: 40px;
+  height: 40px;
+}
+
+.error-message {
+  text-align: center;
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #ffebee;
+  border-left: 4px solid #ef5350;
+  border-radius: 4px;
+  color: #d32f2f;
+  font-size: 1rem;
+  max-width: 600px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mat-table {
+  width: 100%;
+  overflow-x: auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  margin-top: 20px; /* Margin to separate from header/filters */
+}
+
+.mat-header-cell {
+  background-color: #f5f5f5;
+  font-weight: 600;
+  color: #1a237e;
+  padding: 12px;
+  text-align: center;
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.mat-cell {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+  text-align: center;
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.mat-row:last-child .mat-cell {
+  border-bottom: none;
+}
+
+.mat-row:hover {
+  background-color: #f9fafb;
+}
+
+.mat-column-tauxUsure {
+  min-width: 300px;
+}
+
+.mat-column-tauxUsure .inner-table {
+  width: 100%;
+  margin-top: 10px; /* Added margin to separate from the main table row */
+  margin-bottom: 10px;
+  table-layout: auto; /* Allow columns to fit content */
+}
+
+.mat-column-tauxUsure .inner-table .mat-header-cell,
+.mat-column-tauxUsure .inner-table .mat-cell {
+  padding: 8px; /* Reduced padding for tighter layout */
+  text-align: center;
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.mat-column-tauxUsure .mat-paginator {
+  margin-top: 0;
+}
+
+.mat-column-actions {
+  min-width: 100px;
+}
+
+.mat-icon-button {
+  color: #1a237e;
+}
+
+.mat-icon-button:hover {
+  color: #3f51b5;
+}
+
+.no-data {
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 20px;
+  color: #777;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.add-fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  background-color: #1a237e;
+  color: #fff;
+}
+
+.add-fab:hover {
+  background-color: #3f51b5;
+}
+
+/* Remove fixed widths and let columns fit content */
+.inner-table .mat-column-tauxUsure,
+.inner-table .mat-column-seuil,
+.inner-table .mat-column-annee,
+.inner-table .mat-column-typeEmprunteur,
+.inner-table .mat-column-actions {
+  width: auto; /* Let columns adjust to content */
+  min-width: 0; /* Allow shrinking */
+  padding: 0 4px; /* Reduced horizontal padding for tighter fit */
+}
+
+.inner-table {
+  border-collapse: collapse; /* Ensure no extra spacing between cells */
+}
+
+/* Add margin to the "Ajouter taux" button */
+.mat-column-tauxUsure .add-rate-btn {
+  margin-top: 10px; /* Margin from the top */
+  margin-bottom: 10px; /* Added margin to separate from the bottom */
+}
+
+/* Ensure inner table fits content and has proper spacing */
+.mat-column-tauxUsure .inner-table-container {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 992px) {
+  .main-content {
+    margin-left: 0;
+    padding: 15px;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  .intro-text {
+    font-size: 1rem;
+  }
+  .container {
+    padding: 0 10px;
+  }
+  .mat-table {
+    font-size: 0.9rem;
+    margin-top: 15px; /* Adjusted margin for smaller screens */
+  }
+  .mat-column-tauxUsure .inner-table {
+    margin-top: 8px; /* Adjusted margin for smaller screens */
+  }
+  .mat-column-tauxUsure .add-rate-btn {
+    margin-top: 8px; /* Adjusted margin for smaller screens */
+    margin-bottom: 8px; /* Adjusted margin for smaller screens */
+  }
+}
+
+@media (max-width: 576px) {
+  h2 {
+    font-size: 1.25rem;
+  }
+  .intro-text {
+    font-size: 0.9rem;
+  }
+  .mat-header-cell,
+  .mat-cell {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+  .filters {
+    max-width: 100%;
+  }
+  .inner-table .mat-header-cell,
+  .inner-table .mat-cell {
+    padding: 4px; /* Even tighter on very small screens */
+  }
+  .mat-table {
+    margin-top: 10px; /* Further reduced margin for very small screens */
+  }
+  .mat-column-tauxUsure .inner-table {
+    margin-top: 6px; /* Further reduced margin for very small screens */
+  }
+  .mat-column-tauxUsure .add-rate-btn {
+    margin-top: 6px; /* Further reduced margin for very small screens */
+    margin-bottom: 6px; /* Further reduced margin for very small screens */
+  }
+}

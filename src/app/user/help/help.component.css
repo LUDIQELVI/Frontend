@@ -1,0 +1,191 @@
+/* Main Content */
+.main-content {
+  margin-left: 250px; /* Sidebar offset */
+  padding: 80px 20px 20px 20px; /* Top padding for fixed header */
+  min-height: calc(100vh - 64px);
+  background-color: #fff;
+  color: #000;
+  box-sizing: border-box;
+}
+
+/* Help Section */
+.help-section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px 15px 60px;
+  background: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Title */
+.help-section h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+   color: #1a237e;
+;
+  margin-bottom: 25px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+/* Intro paragraph */
+.help-section .flow-text {
+  font-size: 1.3rem;
+  color: #444;
+  margin-bottom: 40px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+/* Help Cards */
+.help-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  padding: 30px 25px;
+  margin-bottom: 35px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.help-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.help-card h4 {
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 18px;
+}
+
+.help-card p {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+/* List styles */
+.help-card .collection {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.help-card .collection-item {
+  border-bottom: 1px solid #e3e3e3;
+  padding: 14px 20px;
+  font-size: 1.1rem;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+}
+
+.help-card .collection-item:last-child {
+  border-bottom: none;
+}
+
+.help-card .collection-item i.material-icons {
+  color: #007bff;
+  font-size: 22px;
+}
+
+/* Browser default list for credit types */
+.help-card .browser-default {
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+
+.help-card .browser-default li {
+  font-size: 1.05rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+/* Button */
+.btn-large {
+  display: inline-block;
+  margin-top: 35px;
+  padding: 14px 45px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 6px;
+  background-color: #1976d2;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.5);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-large:hover,
+.btn-large:focus {
+  background-color: #0d47a1;
+  box-shadow: 0 6px 16px rgba(13, 71, 161, 0.7);
+  outline: none;
+}
+
+/* Center alignment helper */
+.center-align {
+  text-align: center !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .main-content {
+    margin-left: 0;
+    padding: 70px 15px 15px 15px;
+  }
+
+  .help-section h2 {
+    font-size: 1.9rem;
+  }
+
+  .help-section .flow-text {
+    font-size: 1.15rem;
+  }
+
+  .help-card h4 {
+    font-size: 1.6rem;
+  }
+
+  .help-card .collection-item {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .main-content {
+    padding: 60px 10px 10px 10px;
+  }
+
+  .help-section h2 {
+    font-size: 1.6rem;
+  }
+
+  .help-section .flow-text {
+    font-size: 1rem;
+  }
+
+  .help-card h4 {
+    font-size: 1.4rem;
+  }
+
+  .help-card .collection-item {
+    font-size: 0.9rem;
+    padding: 10px 15px;
+  }
+
+  .btn-large {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+}

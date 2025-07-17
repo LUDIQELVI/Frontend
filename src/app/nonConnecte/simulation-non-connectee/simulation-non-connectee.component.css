@@ -1,0 +1,299 @@
+/* ===== GLOBAL ===== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  background-color: #f4f6f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* ===== SIMULATION CARD ===== */
+.simulation-card {
+  max-width: 1100px;
+  width: 90%;
+  margin: 3rem auto;
+  padding: 2.5rem;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.simulation-card:hover {
+  transform: translateY(-3px);
+}
+
+.title-blue {
+  color: #003087;
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+mat-card-subtitle {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #5f6368;
+  margin-bottom: 2rem;
+}
+
+/* ===== FORM LAYOUT ===== */
+.simulation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.form-section {
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #003087;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #003087;
+  padding-bottom: 0.5rem;
+}
+
+/* ===== FORM GRID (uniforme input + select) ===== */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+mat-form-field {
+  width: 100%;
+  font-size: 0.95rem;
+}
+
+mat-form-field.mat-form-field {
+  min-height: 64px;
+}
+
+mat-form-field input.mat-input-element,
+mat-form-field .mat-select-trigger {
+  font-size: 0.95rem;
+  padding: 10px 0;
+}
+
+mat-form-field .mat-form-field-label {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #003087;
+}
+
+mat-form-field.mat-focused .mat-form-field-label {
+  color: #2e7d32;
+}
+
+mat-form-field.mat-focused .mat-form-field-outline-thick {
+  border-color: #2e7d32;
+}
+
+mat-icon[matSuffix] {
+  color: #003087;
+  font-size: 18px;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+mat-icon[matSuffix]:hover {
+  color: #2e7d32;
+}
+
+/* ===== CHARGES & DÉBLOCAGES ===== */
+.deblocage-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.deblocage-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background: #ffffff;
+  padding: 0.8rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.deblocage-group mat-form-field {
+  flex: 1 1 280px;
+  min-width: 180px;
+}
+
+.deblocage-group button {
+  flex: 0 0 auto;
+  height: 32px;   /* réduit */
+  width: 32px;    /* réduit */
+  min-width: 32px;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #d32f2f;
+  color: white;
+  border-radius: 50%;
+  margin-bottom: -10px;
+  transition: background 0.3s ease;
+  padding: 0;
+  margin-top: 4px;
+}
+
+.deblocage-group button mat-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+  line-height: 1;
+}
+
+.deblocage-group button:hover {
+  background-color: #b71c1c;
+}
+
+/* ===== ADD BUTTON ===== */
+.add-button {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 86, 179, 0.3);
+  margin-bottom: 1rem;
+}
+
+.add-button:hover {
+  background: #003d82;
+  box-shadow: 0 6px 16px rgba(0, 61, 130, 0.4);
+  transform: scale(1.05);
+}
+
+/* ===== ACTIONS ===== */
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.simulate-button {
+  background: #0056b3;
+  color: white;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  min-width: 200px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.simulate-button:hover:not(:disabled) {
+  background: #003d82;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(27, 94, 32, 0.4);
+}
+
+.simulate-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ===== ERREUR ===== */
+.error-message {
+  color: #d32f2f;
+  background: #ffebee;
+  padding: 0.5rem;
+  font-weight: 500;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .simulation-card {
+    padding: 1.5rem;
+    width: 95%;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .deblocage-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .deblocage-group button {
+    align-self: flex-end;
+  }
+
+  .simulate-button {
+    width: 100%;
+    max-width: 250px;
+    font-size: 0.9rem;
+  }
+
+  .add-button {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+    max-width: 220px;
+    width: auto;
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+  }
+
+  mat-form-field .mat-form-field-label {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .title-blue {
+    font-size: 1.6rem;
+  }
+
+  .simulate-button {
+    font-size: 0.85rem;
+  }
+
+  .add-button {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.9rem;
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+  }
+
+  mat-form-field {
+    font-size: 0.85rem;
+  }
+}

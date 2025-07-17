@@ -1,0 +1,133 @@
+/* Conteneur principal */
+.container {
+  max-width: 900px;
+  margin: 50px auto 40px;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+/* Main content avec marge à gauche pour sidebar */
+.main-content {
+  margin-left: 250px;
+  min-height: calc(100vh - 64px);
+  padding-top: 40px;
+  color: #000;
+}
+
+/* Titre simple hors card */
+.page-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1a237e;
+  margin-bottom: 24px;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Carte profil centrée */
+.profile-card {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fafafa;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+/* En-tête profil */
+.profile-header {
+  margin-bottom: 2rem;
+}
+
+.avatar-container {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+
+.avatar {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #1a237e;
+  box-shadow: 0 2px 10px rgba(26, 35, 126, 0.3);
+}
+
+/* Nom utilisateur */
+.profile-name {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #000;
+  margin: 0;
+}
+
+/* Détails du profil */
+.profile-details {
+  text-align: left;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  font-size: 1.15rem;
+  margin: 0.75rem 0;
+  color: #222;
+}
+
+.detail-item mat-icon {
+  color: #1a237e;
+  margin-right: 0.75rem;
+  font-size: 24px;
+}
+
+/* Chargement */
+.loading-container {
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.loading-text {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: #1a237e;
+}
+
+/* Responsive - tablettes */
+@media (max-width: 992px) {
+  .main-content {
+    margin-left: 0;
+    padding: 20px 15px;
+  }
+  .profile-card {
+    width: 90%;
+    padding: 1.5rem;
+  }
+  .avatar {
+    width: 110px;
+    height: 110px;
+  }
+  .profile-name {
+    font-size: 1.5rem;
+  }
+  .detail-item {
+    font-size: 1rem;
+  }
+}
+
+/* Responsive - mobiles */
+@media (max-width: 480px) {
+  .avatar {
+    width: 90px;
+    height: 90px;
+  }
+  .profile-name {
+    font-size: 1.3rem;
+  }
+  .detail-item {
+    font-size: 0.95rem;
+  }
+}

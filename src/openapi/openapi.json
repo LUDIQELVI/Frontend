@@ -1,0 +1,1557 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Simulateur TEG",
+        "description": "Api pour effectuer le simulation d'un pret",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3331",
+            "description": "Generated server url"
+        }
+    ],
+    "paths": {
+        "/api/tauxUsure/update/{id}": {
+            "put": {
+                "tags": [
+                    "taux-usure-controller"
+                ],
+                "operationId": "updateTauxUsure",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TauxUsureDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TauxUsure"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/simulation/mettrejour/{idSimulation}": {
+            "put": {
+                "tags": [
+                    "simulation-controller"
+                ],
+                "operationId": "mettreAjour",
+                "parameters": [
+                    {
+                        "name": "idSimulation",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SimulationDtoRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Simulation"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/categorieCredit/update/{id}": {
+            "put": {
+                "tags": [
+                    "categorie-credit-controller"
+                ],
+                "operationId": "updateCategorieCredit",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CategorieDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CategorieCredit"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "tags": [
+                    "authentication-controller"
+                ],
+                "operationId": "register",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegistrationRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/photos/{email}/{title}/{context}": {
+            "post": {
+                "tags": [
+                    "photos-controller"
+                ],
+                "operationId": "savePhotos",
+                "parameters": [
+                    {
+                        "name": "context",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "title",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "file"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "tags": [
+                    "authentication-controller"
+                ],
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "authentication-controller"
+                ],
+                "operationId": "authenticate",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthenticationRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthenticationResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tauxUsure/creer": {
+            "post": {
+                "tags": [
+                    "taux-usure-controller"
+                ],
+                "operationId": "creerTauxUsure",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TauxUsureDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TauxUsure"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/simulation/save/{email}": {
+            "post": {
+                "tags": [
+                    "simulation-controller"
+                ],
+                "operationId": "saveSimulation",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SimulationRequestGlobal"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Simulation"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/simulation/calculer": {
+            "post": {
+                "tags": [
+                    "simulation-controller"
+                ],
+                "operationId": "calculerTeg",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SimulationDtoRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SimulationDtoResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/refresh-token": {
+            "post": {
+                "tags": [
+                    "authentication-controller"
+                ],
+                "operationId": "refreshAccessToken",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "additionalProperties": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/categorieCredit/creer": {
+            "post": {
+                "tags": [
+                    "categorie-credit-controller"
+                ],
+                "operationId": "CreateCategorie",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CategorieDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CategorieCredit"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/updateRole": {
+            "post": {
+                "tags": [
+                    "authentication-controller"
+                ],
+                "operationId": "updateRole",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "request": {
+                                        "$ref": "#/components/schemas/RegistrationRequest"
+                                    },
+                                    "roleName": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/activate": {
+            "post": {
+                "tags": [
+                    "authentication-controller"
+                ],
+                "operationId": "activateAccount",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegistrationRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tauxUsure/listeTaux": {
+            "get": {
+                "tags": [
+                    "taux-usure-controller"
+                ],
+                "operationId": "listTauxUsure",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TauxUsure"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tauxUsure/listeParCategorie/{idCategorie}": {
+            "get": {
+                "tags": [
+                    "taux-usure-controller"
+                ],
+                "operationId": "getListeByCategorieId",
+                "parameters": [
+                    {
+                        "name": "idCategorie",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TauxUsure"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tauxUsure/historiqueUpdate/{idTauxUsure}": {
+            "get": {
+                "tags": [
+                    "taux-usure-controller"
+                ],
+                "operationId": "HistoriqueMiseAJour",
+                "parameters": [
+                    {
+                        "name": "idTauxUsure",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/HistoriqueTauxUsure"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tauxUsure/donneStatistique": {
+            "get": {
+                "tags": [
+                    "taux-usure-controller"
+                ],
+                "operationId": "donneeStatistique",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object",
+                                        "additionalProperties": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/TauxUsureStatistiqueDto"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/simulation/simulationUser/{id}": {
+            "get": {
+                "tags": [
+                    "simulation-controller"
+                ],
+                "operationId": "listeSimulationUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Simulation"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/simulation/simulationParCategorieId/{userId}": {
+            "get": {
+                "tags": [
+                    "simulation-controller"
+                ],
+                "operationId": "listeSimulationCategorie",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "categorieId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Simulation"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/notification/afficherNot/{idSimulation}": {
+            "get": {
+                "tags": [
+                    "notification-controller"
+                ],
+                "operationId": "afficherNotifSimulation",
+                "parameters": [
+                    {
+                        "name": "idSimulation",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Notification"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/categorieCredit/recuperer/{id}": {
+            "get": {
+                "tags": [
+                    "categorie-credit-controller"
+                ],
+                "operationId": "getCategorieCredit",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CategorieDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/categorieCredit/list": {
+            "get": {
+                "tags": [
+                    "categorie-credit-controller"
+                ],
+                "operationId": "getAll",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CategorieCredit"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/categorieCredit/listDesChamp/{id}": {
+            "get": {
+                "tags": [
+                    "categorie-credit-controller"
+                ],
+                "operationId": "champCategorie",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FrAss"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/getAllUser": {
+            "get": {
+                "tags": [
+                    "authentication-controller"
+                ],
+                "operationId": "getAllUser",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthenticationResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tauxUsure/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "taux-usure-controller"
+                ],
+                "operationId": "deleteTauxUsure",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/simulation/supprimer/{idSimulation}": {
+            "delete": {
+                "tags": [
+                    "simulation-controller"
+                ],
+                "operationId": "supprimerSimulation",
+                "parameters": [
+                    {
+                        "name": "idSimulation",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/categorieCredit/supprimer/{id}": {
+            "delete": {
+                "tags": [
+                    "categorie-credit-controller"
+                ],
+                "operationId": "deleteCategorieCredit",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "TauxUsureDto": {
+                "type": "object",
+                "properties": {
+                    "seuil": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "annee": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "categorieId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "typeEprunteur": {
+                        "type": "string",
+                        "enum": [
+                            "Particulier",
+                            "PME",
+                            "GrandeEntreprise"
+                        ]
+                    }
+                }
+            },
+            "CategorieCredit": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "creationDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastModifyDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "nomCategorie": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "fraisObligatoire": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "assurances": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "TauxUsure": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "creationDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastModifyDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "seuil": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "annee": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "categorieCredit": {
+                        "$ref": "#/components/schemas/CategorieCredit"
+                    },
+                    "typeEmprunteur": {
+                        "type": "string",
+                        "enum": [
+                            "Particulier",
+                            "PME",
+                            "GrandeEntreprise"
+                        ]
+                    },
+                    "tauxTEGMoyen": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "tauxUsure": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "Assurance": {
+                "type": "object",
+                "properties": {
+                    "nom": {
+                        "type": "string"
+                    },
+                    "montant": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "DeblocageLigne": {
+                "type": "object",
+                "properties": {
+                    "montant": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "dateDeblocage": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "numero": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "Frais": {
+                "type": "object",
+                "properties": {
+                    "nom": {
+                        "type": "string"
+                    },
+                    "montant": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "SimulationDtoRequest": {
+                "type": "object",
+                "properties": {
+                    "montantEmprunte": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "tauxInteretNominal": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "categoriId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "duree": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "typeEprunteur": {
+                        "type": "string",
+                        "enum": [
+                            "Particulier",
+                            "PME",
+                            "GrandeEntreprise"
+                        ]
+                    },
+                    "frequence": {
+                        "type": "string",
+                        "enum": [
+                            "MENSUELLE",
+                            "ANNUELLE",
+                            "TRIMESTRIALITE"
+                        ]
+                    },
+                    "fraisList": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Frais"
+                        }
+                    },
+                    "assuranceList": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Assurance"
+                        }
+                    },
+                    "tableauDeblocages": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DeblocageLigne"
+                        }
+                    },
+                    "datePremiereEcheance": {
+                        "type": "string",
+                        "format": "date"
+                    }
+                }
+            },
+            "AmortisementLigne": {
+                "type": "object",
+                "properties": {
+                    "numero": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "capitalRestant": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "interet": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "principal": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "assurance": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "echeanceTotale": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "Simulation": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "creationDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastModifyDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "teg": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "echeance": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "coutTotal": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "tableauAmortisement": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AmortisementLigne"
+                        }
+                    },
+                    "montant": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "dateDebut": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "tauxNominal": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "fraisJson": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Frais"
+                        }
+                    },
+                    "assuranceJson": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Assurance"
+                        }
+                    },
+                    "datefin": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "duree": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "typeEmprunteur": {
+                        "type": "string",
+                        "enum": [
+                            "Particulier",
+                            "PME",
+                            "GrandeEntreprise"
+                        ]
+                    },
+                    "frequence": {
+                        "type": "string",
+                        "enum": [
+                            "MENSUELLE",
+                            "ANNUELLE",
+                            "TRIMESTRIALITE"
+                        ]
+                    },
+                    "categorieCredit": {
+                        "$ref": "#/components/schemas/CategorieCredit"
+                    },
+                    "tableauDeblocages": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DeblocageLigne"
+                        }
+                    },
+                    "datePremiereEcheance": {
+                        "type": "string",
+                        "format": "date"
+                    }
+                }
+            },
+            "CategorieDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "nomCategorie": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "fraisObligatoire": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "assurances": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "RegistrationRequest": {
+                "type": "object",
+                "properties": {
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "maxLength": 2147483647,
+                        "minLength": 4,
+                        "type": "string"
+                    }
+                }
+            },
+            "AuthenticationRequest": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "maxLength": 2147483647,
+                        "minLength": 4,
+                        "type": "string"
+                    }
+                }
+            },
+            "AuthenticationResponse": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    },
+                    "refreshToken": {
+                        "type": "string"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "userList": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    }
+                }
+            },
+            "GrantedAuthority": {
+                "type": "object",
+                "properties": {
+                    "authority": {
+                        "type": "string"
+                    }
+                }
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "creationDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastModifyDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "photos": {
+                        "type": "string"
+                    },
+                    "dateNaiss": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "accountLocked": {
+                        "type": "boolean"
+                    },
+                    "enable": {
+                        "type": "boolean"
+                    },
+                    "credentialsNonExpired": {
+                        "type": "boolean"
+                    },
+                    "accountNonExpired": {
+                        "type": "boolean"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "accountNonLocked": {
+                        "type": "boolean"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "enabled": {
+                        "type": "boolean"
+                    },
+                    "authorities": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/GrantedAuthority"
+                        }
+                    }
+                }
+            },
+            "SimulationDtoResponse": {
+                "type": "object",
+                "properties": {
+                    "tegAnnuel": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "echeance": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "tableauAmortissement": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AmortisementLigne"
+                        }
+                    }
+                }
+            },
+            "SimulationRequestGlobal": {
+                "type": "object",
+                "properties": {
+                    "request": {
+                        "$ref": "#/components/schemas/SimulationDtoRequest"
+                    },
+                    "response": {
+                        "$ref": "#/components/schemas/SimulationDtoResponse"
+                    }
+                }
+            },
+            "HistoriqueTauxUsure": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "tauxUsureId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "ancienTauxUsure": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "nouveauTauxUsure": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "ancienSeuil": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "nouveauSeuil": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "ancienneAnnee": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "nouvelleAnnee": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "dateModification": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "typeChangement": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TauxUsureStatistiqueDto": {
+                "type": "object",
+                "properties": {
+                    "annee": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "tauxUsure": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "Notification": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "creationDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastModifyDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "simulation": {
+                        "$ref": "#/components/schemas/Simulation"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "dateNotification": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "alerte": {
+                        "type": "boolean"
+                    },
+                    "annee": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "FrAss": {
+                "type": "object",
+                "properties": {
+                    "assurance": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "frais": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,125 @@
+/* Conteneur principal */
+.dashboard-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  background-color: #fff;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: -5%;
+}
+
+/* Main content */
+.main-content {
+  margin-left: 250px;
+  padding: 100px 24px 24px;
+  min-height: calc(100vh - 64px);
+  background-color: #fff;
+  color: #000;
+}
+
+/* Titre */
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1a237e;
+  margin-bottom: 10px;
+}
+
+/* Sous-titre */
+.dashboard-subtitle {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+/* Statistiques */
+.dashboard-stats {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.stat-box {
+  flex: 1 1 300px;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.stat-box h3 {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1a73e8;
+}
+
+/* Actions */
+.dashboard-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.action-button {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.action-button i {
+  font-size: 1.2rem;
+}
+
+.action-button:hover {
+  background-color: #e3f2fd;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .main-content {
+    margin-left: 0;
+    padding: 70px 15px;
+  }
+
+  .dashboard-stats {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat-box {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .dashboard-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .action-button {
+    width: 100%;
+    justify-content: center;
+  }
+}

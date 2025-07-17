@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Notifications</h2>
+
+<mat-dialog-content>
+  <div *ngIf="notifications.length; else singleMessage">
+    <ul>
+      <li *ngFor="let notif of notifications" [class.unread]="!notif.read">
+        {{ notif.message }}
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #singleMessage>
+    <p *ngIf="data?.message; else noMessage">{{ data.message }}</p>
+    <ng-template #noMessage>
+      <p>Aucune notification disponible.</p>
+    </ng-template>
+  </ng-template>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button color="primary" (click)="markAsRead()">Marquer comme lu</button>
+  <button mat-button (click)="close()">Fermer</button>
+</mat-dialog-actions>

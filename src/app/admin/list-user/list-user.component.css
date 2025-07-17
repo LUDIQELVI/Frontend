@@ -1,0 +1,178 @@
+/* Main content */
+.main-content {
+  margin-left: 250px; /* Compatible avec la sidebar */
+  padding: 20px 30px;
+  min-height: calc(100vh - 64px); /* Ajusté pour l'en-tête */
+  background-color: #f5f7fa; /* Fond clair et professionnel */
+  color: #2a2a2a;
+  transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 992px) {
+  .main-content {
+    margin-left: 0;
+    padding: 15px;
+  }
+}
+
+/* Container */
+.container {
+  max-width: 1200px; /* Largeur maximale pour un look propre */
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Titre */
+.page-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1a237e;
+  margin-bottom: 24px;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 9%;
+}
+
+/* Intro Text */
+.intro-text {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  color: #555;
+  max-width: 800px;
+}
+
+/* Loading */
+.loading {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+/* Error Message */
+.error-message {
+  text-align: center;
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #ffebee; /* Rouge pâle pour erreur */
+  border-left: 4px solid #ef5350; /* Bordure rouge */
+  border-radius: 4px;
+  color: #d32f2f;
+}
+
+.error-message button {
+  margin-top: 10px;
+}
+
+/* Change Log */
+.change-log {
+  background-color: #e3f2fd; /* Bleu pâle */
+  border-left: 4px solid #2196f3; /* Bordure bleue */
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+
+.change-log h6 {
+  margin: 0 0 10px;
+  font-weight: 600;
+  color: #1976d2;
+}
+
+.change-log ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.change-log ul li {
+  padding: 5px 0;
+  color: #444;
+}
+
+/* User Table */
+.user-table {
+  width: 100%;
+  overflow-x: auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.user-table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+  color: #1a237e;
+  padding: 12px;
+  text-align: left;
+}
+
+.user-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+}
+
+.user-table tr:last-child td {
+  border-bottom: none;
+}
+
+.user-table .mat-column-photo {
+  width: 60px;
+  text-align: center;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+
+.role-select {
+  width: 150px;
+  margin-left: 10px;
+}
+
+.role-select .mat-form-field {
+  font-size: 0.9rem;
+}
+
+.role-select .mat-select-value {
+  color: #444;
+}
+
+/* No Data */
+.no-data {
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 20px;
+  color: #777;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .intro-text {
+    font-size: 1rem;
+  }
+
+  .user-table {
+    font-size: 0.9rem;
+  }
+
+  .role-select {
+    width: 120px;
+  }
+
+  .container {
+    padding: 0 10px;
+  }
+}

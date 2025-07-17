@@ -1,0 +1,35 @@
+<app-user-header></app-user-header>
+<div class="main-content">
+  <div class="dashboard-container">
+    <h2 class="dashboard-title text-center">Bienvenue sur votre espace personnel, {{ userName }} !</h2>
+    <p class="dashboard-subtitle text-center">
+      Gérez vos simulations de crédit, suivez votre activité et commencez de nouveaux projets simplement et rapidement.
+    </p>
+
+    <div class="dashboard-stats">
+      <div class="stat-box">
+        <h3>Total de simulations</h3>
+        <p class="stat-value">{{ totalSimulations || 0 }}</p>
+      </div>
+      <div class="stat-box">
+        <h3>Activité récente</h3>
+        <ul class="recent-activity">
+          <li *ngIf="recentActivity.length === 0">Aucune activité récente</li>
+          <li *ngFor="let activity of recentActivity">{{ activity }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="dashboard-actions text-center">
+      <button class="action-button" (click)="navigateTo('list-simulations')">
+        <i class="material-icons">calculate</i> Mes Simulations de Crédit
+      </button>
+      <button class="action-button" (click)="navigateTo('simulation')">
+        <i class="material-icons">tune</i> Analyser une Simulation
+      </button>
+      <button class="action-button" (click)="navigateTo('categorie')">
+        <i class="material-icons">add_circle</i> Nouvelle Simulation
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+<app-admin-header></app-admin-header>
+
+<div class="main-content">
+  <div class="container">
+    <h2 class="page-title">Gestion des utilisateurs</h2>
+    <p class="intro-text">Gérez les utilisateurs inscrits, modifiez leur statut et leurs rôles. Total: {{ totalElements }} utilisateurs</p>
+
+    <div *ngIf="isLoading" class="loading">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+      <button mat-button color="primary" (click)="loadUsers()">Réessayer</button>
+    </div>
+
+    <div *ngIf="changeLog.length" class="change-log">
+      <h6>Historique des modifications :</h6>
+      <ul>
+        <li *ngFor="let log of changeLog">{{ log }}</li>
+      </ul>
+    </div>
+
+    <table mat-table [dataSource]="users" class="mat-elevation-z8 user-table" *ngIf="!isLoading && users.length">
+      <ng-container matColumnDef="photo">
+        <th mat-header-cell *matHeaderCellDef>Photo</th>
+        <td mat-cell *matCellDef="let user">
+          <img *ngIf="user.photos" [src]="user.photos" alt="Profil" class="profile-img" />
+          <mat-icon *ngIf="!user.photos">person</mat-icon>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nom</th>
+        <td mat-cell *matCellDef="let user">{{ user.firstName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef>Rôle</th>
+        <td mat-cell *matCellDef="let user">{{ getRoleNames(user) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Statut</th>
+        <td mat-cell *matCellDef="let user">
+          <mat-icon [matTooltip]="user.enabled ? 'Actif' : 'Inactif'">
+            {{ user.enabled ? 'lock_open' : 'lock' }}
+          </mat-icon>
+          {{ user.enabled ? 'Actif' : 'Inactif' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let user">
+          <button
+            mat-icon-button
+            [matTooltip]="user.enabled ? 'Désactiver' : 'Activer'"
+            [color]="user.enabled ? 'warn' : 'primary'"
+            (click)="toggleUserStatus(user)"
+            [disabled]="isLoading"
+          >
+            <mat-icon>{{ user.enabled ? 'block' : 'check_circle' }}</mat-icon>
+          </button>
+          <mat-form-field appearance="outline" class="role-select">
+            <mat-label>Changer le rôle</mat-label>
+            <mat-select (selectionChange)="updateUserRole(user, $event.value)" [disabled]="isLoading">
+              <mat-option value="ADMIN" [disabled]="userService.userHasRole(user, 'ADMIN')">Admin</mat-option>
+              <mat-option value="USER" [disabled]="userService.userHasRole(user, 'USER')">Utilisateur</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator
+      *ngIf="!isLoading && users.length"
+      [length]="totalElements"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="[5, 10, 25, 50]"
+      (page)="onPageChange($event)"
+      showFirstLastButtons
+    ></mat-paginator>
+
+    <div *ngIf="!isLoading && !users.length" class="no-data">
+      Aucun utilisateur trouvé.
+    </div>
+  </div>
+</div>

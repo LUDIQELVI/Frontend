@@ -1,0 +1,53 @@
+<div class="p-6">
+  <div class="text-center mb-6">
+    <img src="assets/images/logo.png" alt="SimTEG Logo" class="h-12 mx-auto mb-4" />
+    <h2 class="text-2xl font-semibold text-gray-800">Inscription</h2>
+    <p class="text-gray-600">Créez un compte pour simuler le coût de vos prêts</p>
+  </div>
+  <form (ngSubmit)="onSubmit()">
+    <div class="mb-4">
+      <label for="firstName" class="block text-gray-700 font-medium mb-2">Prénom</label>
+      <input type="text" id="firstName" [(ngModel)]="firstName" name="firstName" (blur)="validateField('firstName')" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required>
+      <span class="text-red-500 text-sm" *ngIf="fieldErrors['firstName']">{{ fieldErrors['firstName'] }}</span>
+    </div>
+    <div class="mb-4">
+      <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+      <input type="email" id="email" [(ngModel)]="email" name="email" (blur)="validateField('email')" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required>
+      <span class="text-red-500 text-sm" *ngIf="fieldErrors['email']">{{ fieldErrors['email'] }}</span>
+    </div>
+    <div class="mb-4">
+      <label for="telephone" class="block text-gray-700 font-medium mb-2">Téléphone</label>
+      <input type="text" id="telephone" [(ngModel)]="telephone" name="telephone" (blur)="validateField('telephone')" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required>
+      <span class="text-red-500 text-sm" *ngIf="fieldErrors['telephone']">{{ fieldErrors['telephone'] }}</span>
+    </div>
+    <div class="mb-4">
+      <label for="dateNaiss" class="block text-gray-700 font-medium mb-2">Date de naissance</label>
+      <input type="date" id="dateNaiss" [(ngModel)]="dateNaiss" name="dateNaiss" (blur)="validateField('dateNaiss')" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required>
+      <span class="text-red-500 text-sm" *ngIf="fieldErrors['dateNaiss']">{{ fieldErrors['dateNaiss'] }}</span>
+    </div>
+    <div class="mb-4">
+      <label for="password" class="block text-gray-700 font-medium mb-2">Mot de passe</label>
+      <div class="relative">
+        <input [type]="showPassword ? 'text' : 'password'" id="password" [(ngModel)]="password" name="password" (blur)="validateField('password')" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required>
+        <span class="absolute right-3 top-3 text-gray-600 cursor-pointer" (click)="togglePasswordVisibility()">
+          <i class="material-icons">{{ showPassword ? 'visibility_off' : 'visibility' }}</i>
+        </span>
+      </div>
+      <span class="text-red-500 text-sm" *ngIf="fieldErrors['password']">{{ fieldErrors['password'] }}</span>
+    </div>
+    <div class="mb-4">
+      <label for="photo" class="block text-gray-700 font-medium mb-2">Photo de profil</label>
+      <input type="file" id="photo" (change)="onFileSelected($event)" accept="image/*" class="w-full p-3 border rounded-lg">
+      <div *ngIf="photoUrl" class="mt-4">
+        <img [src]="photoUrl" alt="Photo preview" class="w-24 h-24 rounded-full mx-auto">
+      </div>
+    </div>
+    <button type="submit" [disabled]="submitting" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
+      {{ submitting ? 'Envoi...' : 'S\'inscrire' }}
+    </button>
+    <p *ngIf="errorMessage" class="text-red-500 text-center mt-4">{{ errorMessage }}</p>
+  </form>
+  <p class="text-center mt-4">
+    Déjà un compte ? <a (click)="openLoginModal()" class="text-blue-600 hover:underline cursor-pointer">Connectez-vous</a>
+  </p>
+</div>

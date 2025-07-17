@@ -1,0 +1,33 @@
+<app-admin-header></app-admin-header>
+
+<div class="main-content">
+  <div class="dashboard-container">
+    <h2 class="dashboard-title">Bienvenue, {{ userName }} !</h2>
+    <p class="dashboard-subtitle">Surveillez les statistiques et gérez vos ressources en un clic.</p>
+
+    <!-- Stats Cards -->
+    <div class="dashboard-stats">
+      <!-- Users Count -->
+      <div class="stat-box">
+        <h3>Utilisateurs</h3>
+        <p class="stat-value">{{ users.length }}</p>
+      </div>
+
+      <!-- Credit Categories Count -->
+      <div class="stat-box">
+        <h3>Catégories de Crédit</h3>
+        <p class="stat-value">{{ categoryCount }}</p>
+      </div>
+    </div>
+
+    <!-- Dashboard Actions -->
+    <div class="dashboard-actions">
+      <button class="action-button" (click)="selectCard($event, 'admin/gerer-users')">
+        <i class="fas fa-users-cog"></i> Gérer les Utilisateurs
+      </button>
+      <button class="action-button" (click)="selectCard($event, 'admin/gestion-categories')">
+        <i class="fas fa-list"></i> Gérer les Catégories
+      </button>
+    </div>
+  </div>
+</div>

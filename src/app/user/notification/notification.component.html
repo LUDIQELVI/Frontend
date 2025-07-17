@@ -1,0 +1,11 @@
+<div *ngIf="currentNotification" class="notification-bar" @slideInOut [ngClass]="{
+  'notification-success': currentNotification.type === 'success',
+  'notification-error': currentNotification.type === 'error'
+}">
+  <div class="notification-content">
+    <span class="notification-message">
+      {{ currentNotification.message }}
+    </span>
+    <button class="btn-close" (click)="closeNotification()" aria-label="Fermer la notification">×</button>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+export enum Frequence {
+    MENSUELLE = 'MENSUELLE',
+    TRIMESTRIALITE = 'TRIMESTRIALITE',
+    ANNUELLE = 'ANNUELLE',
+    SEMESTRIELLE= 'SEMESTRIELLE'
+  }
+  

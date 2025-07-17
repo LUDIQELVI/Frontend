@@ -1,0 +1,38 @@
+  <app-user-header></app-user-header>
+
+<div class="container">
+
+  <div class="main-content">
+    <h1 class="page-title">Statistiques des Taux d'Usure</h1>
+    <p class="intro-text">
+      Explorez l'évolution des taux d'usure à travers différentes catégories de crédits. 
+      Sélectionnez une catégorie pour visualiser les données historiques et obtenir une analyse détaillée.
+    </p>
+
+    <div *ngIf="isLoading" class="loading-container">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <mat-form-field appearance="outline" class="category-select">
+      <mat-label>Sélectionner une catégorie</mat-label>
+      <mat-select [(ngModel)]="selectedCategory" (ngModelChange)="onCategoryChange()">
+        <mat-option *ngFor="let category of categories" [value]="category.id">
+          {{ category.nomCategorie }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div *ngIf="selectedCategory" class="chart-section">
+      <canvas id="tauxUsureChart" class="chart-canvas"></canvas>
+      <div class="chart-comment">
+        <p class="comment-text">
+          Ce graphique montre l'évolution des taux d'usure pour la catégorie sélectionnée au fil des années. 
+          Les données sont basées sur les mises à jour historiques des taux d'usure. 
+          La courbe verte représente les variations annuelles, avec des pics indiquant des augmentations notables 
+          et des creux reflétant des baisses temporaires. Analysez ces tendances pour mieux comprendre 
+          l'impact des changements économiques.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,91 @@
+<app-user-header></app-user-header>
+
+<div class="main-content">
+  <div class="container">
+    <div class="toolbar">
+      <h2 class="dashboard-title">Mes Simulations de Crédit</h2>
+      <p class="intro-text">
+        Gérez et consultez vos simulations de crédit avec précision pour planifier vos projets financiers.
+      </p>
+    </div>
+
+    <mat-form-field appearance="outline" class="search-bar">
+      <mat-label>Rechercher une simulation</mat-label>
+      <input
+        matInput
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearch($event)"
+        placeholder="Tapez pour rechercher..."
+      />
+    </mat-form-field>
+
+    <div *ngIf="isLoading" class="loading">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <div class="table-wrapper" *ngIf="!isLoading && filteredSimulations.length">
+      <table mat-table [dataSource]="filteredSimulations" class="mat-elevation-z8" role="grid">
+        
+        <!-- Colonne Catégorie -->
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef>Catégorie</th>
+          <td mat-cell *matCellDef="let sim">{{ getCategoryName(sim.categorieCredit?.id) }}</td>
+        </ng-container>
+
+        <!-- Colonne TEG -->
+        <ng-container matColumnDef="teg">
+          <th mat-header-cell *matHeaderCellDef>TEG (%)</th>
+          <td mat-cell *matCellDef="let simulation">
+            {{ simulation.teg !== undefined ? (simulation.teg | number:'1.2-2') : 'N/A' }}
+          </td>
+        </ng-container>
+
+        <!-- Colonne Montant -->
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef>Montant (FCFA)</th>
+          <td mat-cell *matCellDef="let simulation">
+            {{ simulation.montant !== undefined ? (simulation.montant | number:'1.0-0') : 'N/A' }}
+          </td>
+        </ng-container>
+
+        <!-- Colonne Actions -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let sim">
+            <button mat-icon-button color="primary" (click)="editSimulation(sim)" matTooltip="Modifier">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="openDeleteDialog(sim.id)" matTooltip="Supprimer">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button color="accent" (click)="showSimulationNotification(sim.id)" matTooltip="Voir Notifications">
+              <mat-icon>notifications</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <div *ngIf="!isLoading && !filteredSimulations.length" class="no-data">
+      Aucune simulation trouvée.
+    </div>
+  </div>
+
+  <button
+    mat-fab
+    color="primary"
+    class="fab-button"
+    matTooltip="Nouvelle Simulation"
+    (click)="addSimulation()"
+    aria-label="Ajouter une simulation"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

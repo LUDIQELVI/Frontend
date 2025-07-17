@@ -1,0 +1,134 @@
+<!-- Navbar -->
+<nav class="nav-wrapper" [ngClass]="{ 'fixed': navbarfixed, 'nofixed': !navbarfixed }">
+  <div class="container">
+    <a href="/home-connected" class="brand-logo">
+      <img src="assets/images/logo.png" alt="SimTEG Logo" />
+    </a>
+    <a href="#" class="sidenav-trigger" data-target="mobile-links">
+      <i class="material-icons">menu</i>
+    </a>
+    <ul class="right hide-on-med-and-down">
+      <li><a (click)="startSimulation()" class="btn-flat blue-text text-darken-2">Nouvelle Simulation</a></li>
+      <li><a (click)="viewSimulations()" class="btn-flat green-text text-darken-2">Mes Simulations</a></li>
+      <li>
+        <a href="#" class="dropdown-trigger" data-target="user-dropdown" (click)="$event.preventDefault()">
+          <ng-container *ngIf="user?.photos as photo; else noPhoto">
+            <img [src]="photo" alt="User Photo" class="user-photo circle" />
+          </ng-container>
+          <ng-template #noPhoto>
+            <span class="user-initial circle">{{ user?.firstName?.charAt(0) || 'U' }}</span>
+          </ng-template>
+          <span class="user-name">{{ user?.firstName || 'Utilisateur' }}</span>
+          <i class="material-icons right">arrow_drop_down</i>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Dropdown Menu -->
+<ul id="user-dropdown" class="dropdown-content">
+  <li><a (click)="viewSimulations()">Mes Simulations</a></li>
+  <li class="divider"></li>
+  <li><a (click)="logout()">Déconnexion</a></li>
+</ul>
+
+
+<!-- ✅ Mobile Sidebar -->
+<ul class="sidenav" id="mobile-links">
+  <li><a (click)="startSimulation()" class="blue-text text-darken-2">Nouvelle Simulation</a></li>
+  <li><a (click)="viewSimulations()" class="green-text text-darken-2">Mes Simulations</a></li>
+  <li><a (click)="logout()" class="red-text text-darken-2">Déconnexion</a></li>
+</ul>
+
+
+<!-- Welcome Section -->
+<section id="welcome" class="section welcome-section">
+  <div class="container">
+    <div class="content-wrapper">
+      <div class="text-content">
+        <h1>Bienvenue, {{ user?.firstName || 'Utilisateur' }} !</h1>
+        <p class="intro-text">
+          Commencez une nouvelle simulation de prêt, consultez vos simulations précédentes ou exportez vos résultats pour une analyse détaillée.
+        </p>
+        <div class="cta-buttons">
+          <a (click)="startSimulation()" class="btn btn-large blue lighten-1 waves-effect waves-light">
+            Nouvelle Simulation
+          </a>
+          <a (click)="viewSimulations()" class="btn btn-large green lighten-1 waves-effect waves-light transparent-btn">
+            Mes Simulations
+          </a>
+        </div>
+      </div>
+      <img src="assets/images/home-image.avif" alt="Simulation TEG" class="calculator-img" width="400" height="400" />
+    </div>
+  </div>
+</section>
+
+<!-- Recent Simulations Section -->
+<section id="recent-simulations" class="section recent-simulations-section">
+  <div class="container">
+    <h2 class="center-align">Vos Simulations Récentes</h2>
+    <p class="center-align">Consultez vos dernières simulations ou commencez une nouvelle.</p>
+
+    <div class="row" *ngIf="recentSimulations.length > 0; else noSimulations">
+      <div class="col s12 m6 l4" *ngFor="let sim of recentSimulations">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">Simulation #{{ sim.id }}</span>
+            <p><strong>Montant :</strong> {{ sim.montant | number }} FCFA</p>
+            <p><strong>Taux :</strong> {{ sim.tauxNominal }}%</p>
+            <p><strong>Durée :</strong> {{ sim.duree }} mois</p>
+            <p><strong>Type :</strong> {{ sim.typeEmprunteur }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noSimulations>
+      <div class="row">
+        <div class="col s12">
+          <div class="card">
+            <div class="card-content center-align">
+              <p>Aucune simulation récente. Commencez une nouvelle simulation dès maintenant !</p>
+              <a (click)="startSimulation()" class="btn blue lighten-1 waves-effect waves-light">Créer une Simulation</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer id="contact" class="page-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col l4 s12">
+        <h5 class="footer-title center">SimTEG</h5>
+        <p class="footer-text center">
+          Votre solution pour simuler et comprendre le coût réel de vos prêts au Cameroun.
+        </p>
+      </div>
+      <div class="col l4 s12">
+        <h5 class="footer-title center">Liens rapides</h5>
+        <ul class="center-align footer-links">
+          <li><a href="#" class="footer-link">FAQ</a></li>
+          <li><a href="#" class="footer-link">Politique de confidentialité</a></li>
+          <li><a href="#" class="footer-link">Conditions d'utilisation</a></li>
+        </ul>
+      </div>
+      <div class="col l4 s12">
+        <h5 class="footer-title center">Contactez-nous</h5>
+        <p class="footer-text center">contact: simteg.com</p>
+        <p class="footer-text center">+237 677 76 57 77</p>
+        <div class="center-align">
+          <a href="mailto:contact@simteg.com" class="btn blue lighten-1 waves-effect waves-light">Nous contacter</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="footer-copyright">
+    <div class="container center">© 2025 SimTEG. Tous droits réservés.</div>
+  </div> -->
+</footer>

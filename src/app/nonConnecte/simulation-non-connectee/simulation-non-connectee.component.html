@@ -1,0 +1,173 @@
+<app-header></app-header>
+
+<mat-card class="simulation-card">
+  <mat-card-title class="title-blue">Simulation de {{ category?.nomCategorie || 'Crédit' }}</mat-card-title>
+  <mat-card-subtitle>Remplissez votre simulateur pour obtenir les résultats immédiatement</mat-card-subtitle>
+
+  <mat-card-content>
+    <form [formGroup]="simulationForm" (ngSubmit)="simulateCredit()" class="simulation-form">
+
+      <!-- Informations générales -->
+      <div class="form-section">
+        <h3 class="section-title">Informations générales</h3>
+        <div class="form-grid">
+
+          <!-- Montant -->
+          <mat-form-field appearance="outline">
+            <mat-label>Montant du prêt (FCFA)</mat-label>
+            <input matInput type="number" formControlName="montant" placeholder="Entrez le montant">
+            <span class="formatted-amount" *ngIf="simulationForm.get('montant')?.value">
+              {{ formatNumber(simulationForm.get('montant')?.value) }} FCFA
+            </span>
+            <mat-icon matSuffix matTooltip="Montant total du prêt que vous souhaitez emprunter">info</mat-icon>
+            <mat-error *ngIf="simulationForm.get('montant')?.hasError('required')">Champ requis</mat-error>
+            <mat-error *ngIf="simulationForm.get('montant')?.hasError('min')">Montant minimum : 1 FCFA</mat-error>
+          </mat-form-field>
+
+          <!-- Fréquence -->
+          <mat-form-field appearance="outline">
+            <mat-label>Fréquence de remboursement</mat-label>
+            <mat-select formControlName="frequence">
+              <mat-option *ngFor="let freq of frequenceOptions" [value]="freq">{{ freq }}</mat-option>
+            </mat-select>
+            <mat-icon matSuffix matTooltip="Fréquence des paiements">info</mat-icon>
+            <mat-error *ngIf="simulationForm.get('frequence')?.hasError('required')">Champ requis</mat-error>
+          </mat-form-field>
+
+          <!-- Durée -->
+          <mat-form-field appearance="outline">
+            <mat-label>Durée</mat-label>
+            <input matInput type="number" formControlName="duree" placeholder="Entrez la durée">
+            <mat-icon matSuffix matTooltip="Durée du prêt selon la fréquence choisie">info</mat-icon>
+            <mat-error *ngIf="simulationForm.get('duree')?.hasError('required')">Champ requis</mat-error>
+            <mat-error *ngIf="simulationForm.get('duree')?.hasError('min')">Durée minimum : 1</mat-error>
+            <mat-error *ngIf="simulationForm.get('duree')?.hasError('max')">Vous devez entrer un nombre inférieur ou égal à 100</mat-error>
+          </mat-form-field>
+
+          <!-- Type d'emprunteur -->
+          <mat-form-field appearance="outline">
+            <mat-label>Type d'emprunteur</mat-label>
+            <mat-select formControlName="typeEmprunteur" (selectionChange)="onTypeEmprunteurChange($event.value)">
+              <mat-option *ngFor="let type of typeEmprunteurOptions" [value]="type">{{ type }}</mat-option>
+            </mat-select>
+            <mat-icon matSuffix matTooltip="Type d'emprunteur">info</mat-icon>
+            <mat-error *ngIf="simulationForm.get('typeEmprunteur')?.hasError('required')">Champ requis</mat-error>
+          </mat-form-field>
+
+          <!-- Taux nominal -->
+          <mat-form-field appearance="outline">
+            <mat-label>Taux nominal (%)</mat-label>
+            <input matInput type="number" formControlName="tauxNominal" step="0.01" placeholder="Entrez le taux">
+            <mat-icon matSuffix matTooltip="Taux d'intérêt nominal">info</mat-icon>
+            <mat-error *ngIf="simulationForm.get('tauxNominal')?.hasError('required')">Champ requis</mat-error>
+            <mat-error *ngIf="simulationForm.get('tauxNominal')?.hasError('min')">Taux minimum : 0.01%</mat-error>
+          </mat-form-field>
+
+          <!-- Date de première échéance -->
+          <mat-form-field appearance="outline">
+            <mat-label>Date de première échéance</mat-label>
+            <input matInput [matDatepicker]="pickerDebut" formControlName="dateDebut" [min]="minDate" placeholder="jj/mm/aaaa">
+            <mat-datepicker-toggle matSuffix [for]="pickerDebut"></mat-datepicker-toggle>
+            <mat-datepicker #pickerDebut></mat-datepicker>
+            <mat-icon matSuffix matTooltip="Date de la première échéance">info</mat-icon>
+            <mat-error *ngIf="simulationForm.get('dateDebut')?.hasError('required')">Champ requis</mat-error>
+          </mat-form-field>
+
+        </div>
+      </div>
+
+      <!-- Charges -->
+      <div class="form-section">
+        <h3 class="section-title">Charges (frais et assurances)</h3>
+        <div class="form-grid">
+
+          <!-- Frais -->
+          <ng-container formArrayName="fraisObligatoires">
+            <div *ngFor="let frais of fraisObligatoires.controls; let i=index" [formGroupName]="i">
+              <mat-form-field appearance="outline">
+                <mat-label>{{ frais.get('nom')?.value }}</mat-label>
+                <input matInput type="number" formControlName="montant" placeholder="Montant en FCFA">
+                <span class="formatted-amount" *ngIf="frais.get('montant')?.value">
+                  {{ formatNumber(frais.get('montant')?.value) }} FCFA
+                </span>
+                <mat-icon matSuffix matTooltip="Frais obligatoire">info</mat-icon>
+                <mat-error *ngIf="frais.get('montant')?.hasError('required')">Champ requis</mat-error>
+                <mat-error *ngIf="frais.get('montant')?.hasError('min')">Montant minimum : 0 FCFA</mat-error>
+              </mat-form-field>
+            </div>
+          </ng-container>
+
+          <!-- Assurances -->
+          <ng-container formArrayName="assurancesObligatoires">
+            <div *ngFor="let assurance of assurancesObligatoires.controls; let i=index" [formGroupName]="i">
+              <mat-form-field appearance="outline">
+                <mat-label>{{ assurance.get('nom')?.value }}</mat-label>
+                <input matInput type="number" formControlName="montant" placeholder="Montant en FCFA">
+                <span class="formatted-amount" *ngIf="assurance.get('montant')?.value">
+                  {{ formatNumber(assurance.get('montant')?.value) }} FCFA
+                </span>
+                <mat-icon matSuffix matTooltip="Assurance obligatoire">info</mat-icon>
+                <mat-error *ngIf="assurance.get('montant')?.hasError('required')">Champ requis</mat-error>
+                <mat-error *ngIf="assurance.get('montant')?.hasError('min')">Montant minimum : 0 FCFA</mat-error>
+              </mat-form-field>
+            </div>
+          </ng-container>
+
+        </div>
+      </div>
+
+      <!-- Déblocages -->
+      <div class="form-section">
+        <h3 class="section-title">Déblocages</h3>
+        <button type="button" class="add-button" (click)="addDeblocage()" aria-label="Ajouter un nouveau déblocage">
+          Ajouter un déblocage
+        </button>
+        <div class="form-grid deblocage-grid">
+          <ng-container formArrayName="deblocages">
+            <div *ngFor="let deblocage of deblocages.controls; let i=index" [formGroupName]="i" class="deblocage-group">
+              <mat-form-field appearance="outline">
+                <mat-label>Date de déblocage {{ i + 1 }}</mat-label>
+                <input matInput [matDatepicker]="pickerDeblocage" formControlName="dateDeblocage" [min]="minDate" placeholder="jj/mm/aaaa">
+                <mat-datepicker-toggle matSuffix [for]="pickerDeblocage"></mat-datepicker-toggle>
+                <mat-datepicker #pickerDeblocage></mat-datepicker>
+                <mat-icon matSuffix matTooltip="Date à laquelle une partie du prêt est débloquée">info</mat-icon>
+                <mat-error *ngIf="deblocages.errors?.['invalidDeblocageDate'] && i === 0">
+  La date de chaque déblocage doit être antérieure à la date de première échéance.
+</mat-error>
+
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Montant (FCFA)</mat-label>
+                <input matInput type="number" formControlName="montant" placeholder="Montant en FCFA">
+                <span class="formatted-amount" *ngIf="deblocage.get('montant')?.value">
+                  {{ formatNumber(deblocage.get('montant')?.value) }} FCFA
+                </span>
+                <mat-icon matSuffix matTooltip="Montant débloqué à cette date">info</mat-icon>
+                <mat-error *ngIf="deblocage.get('montant')?.hasError('required')">Champ requis</mat-error>
+                <mat-error *ngIf="deblocage.get('montant')?.hasError('min')">Montant minimum : 1 FCFA</mat-error>
+              </mat-form-field>
+
+              <button mat-icon-button color="warn" (click)="removeDeblocage(i)" matTooltip="Supprimer ce déblocage" aria-label="Supprimer ce déblocage" type="button">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <mat-error *ngIf="errorMessage" class="error-message">{{ errorMessage }}</mat-error>
+
+      <div class="form-actions button-container">
+        <button mat-raised-button color="primary" type="submit" [disabled]="isLoading" class="simulate-button">
+          <ng-container *ngIf="isLoading; else notLoading">
+            <mat-spinner diameter="20"></mat-spinner>
+          </ng-container>
+          <ng-template #notLoading>
+            Simuler le prêt
+          </ng-template>
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

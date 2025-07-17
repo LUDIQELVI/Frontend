@@ -1,0 +1,283 @@
+/* HEADER */
+.navbar {
+  background-color: #e1f5fe;
+  height: 64px;
+  line-height: 64px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 20px;
+}
+
+/* Le bouton menu hamburger (caché par défaut) */
+.sidenav-trigger {
+  display: none;
+  margin-right: 15px;
+  z-index: 1001;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.sidenav-trigger i.material-icons {
+  font-size: 2rem;
+  color: #000;
+}
+
+.welcome-text {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-left: 250px;
+  flex-grow: 1;
+  color: #000;
+}
+
+.notification-icon {
+  position: relative;
+  cursor: pointer;
+}
+
+.notification-icon .material-icons {
+  font-size: 1.8rem;
+  color: #000;
+}
+
+.badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  color: rgb(194, 16, 66);
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+  margin-bottom: 70%;
+  font-size:large;
+  font-family: bold;
+  margin-right: 10%;
+  margin-top: 50%;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #007bff;
+  margin-bottom: -10px;
+}
+
+/* SIDEBAR */
+.sidenav {
+  width: 250px;
+  background-color: #e1f5fe;
+  position: fixed;
+  height: 100vh;
+  top: 64px;
+  left: 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  padding-top: 10px;
+  z-index: 999;
+  transition: transform 0.3s ease;
+}
+
+/* Sidebar ouvert par défaut sur grand écran */
+@media (min-width: 993px) {
+  .sidenav {
+    transform: translateX(0);
+  }
+}
+
+/* Sidebar caché par défaut sur petit écran */
+@media (max-width: 992px) {
+  .sidenav {
+    transform: translateX(-100%);
+  }
+
+  /* Classe pour ouvrir le sidebar */
+  .sidenav.open {
+    transform: translateX(0);
+  }
+}
+
+/* Styles sidebar */
+.sidenav-header {
+  padding: 20px;
+  background-color: #e1f5fe;
+}
+
+.sidenav .logo-img {
+  max-width: 120px;
+  margin: 0 auto;
+  display: block;
+}
+
+.sidenav li {
+  margin-bottom: 12px; /* ESPACEMENT ENTRE LI */
+}
+
+.sidenav li a {
+  color: #000;
+  font-size: 1rem;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+}
+
+.whatsapp-notification {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  width: 300px !important;
+  background-color: #e5ddd5 !important;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+  animation: slideIn 0.5s ease-in-out, slideOut 0.5s ease-in-out 4.5s;
+}
+
+.whatsapp-notification .mat-dialog-content {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px;
+  color: #333;
+  font-size: 14px;
+}
+
+.whatsapp-notification .mat-dialog-actions {
+  justify-content: flex-end;
+  padding: 0 10px 10px;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+.sidenav li a i.material-icons {
+  margin-right: 10px;
+  color: #0056b3; /* BLEU FONCÉ */
+}
+
+.sidenav li a:hover {
+  background: #b2d9ec;
+  color: #000;
+}
+
+/* RESPONSIVE */
+
+/* Affiche bouton hamburger et ajuste le texte pour petit écran */
+@media (max-width: 992px) {
+  .navbar {
+    height: 56px;
+  }
+
+  .sidenav-trigger {
+    display: inline-block;
+  }
+
+  .welcome-text {
+    margin-left: 60px;
+    font-size: 1.2rem;
+  }
+
+  .sidenav {
+    top: 56px;
+    width: 220px;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .notification-icon .material-icons {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    height: 50px;
+  }
+
+  .welcome-text {
+    margin-left: 50px;
+    font-size: 1rem;
+  }
+
+  .sidenav {
+    width: 200px;
+    top: 50px;
+  }
+
+  .sidenav li a {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+
+  .sidenav .logo-img {
+    max-width: 100px;
+  }
+
+  .avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .notification-icon .material-icons {
+    font-size: 1.4rem;
+  }
+
+  .badge {
+    font-size: 0.6rem;
+    padding: 1px 4px;
+  }
+}
+
+/* MAIN CONTENT OFFSET */
+main {
+  margin-left: 250px;
+  padding-top: 64px;
+  transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 992px) {
+  main {
+    margin-left: 0;
+    padding-top: 56px;
+  }
+}
+
+@media (max-width: 600px) {
+  main {
+    padding-top: 50px;
+  }
+}
