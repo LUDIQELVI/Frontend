@@ -15,7 +15,7 @@ import {
   providedIn: 'root'
 })
 export class SimulationService {
-  private readonly rootUrl = 'http://localhost:3331/api/simulation';
+  private readonly rootUrl = 'https://backendsimteg-production.up.railway.app';
   private simulationCreatedSubject = new Subject<Simulation>();
   simulationCreated$ = this.simulationCreatedSubject.asObservable();
 
@@ -56,7 +56,7 @@ export class SimulationService {
 
   getTauxUsureByCategorieId(catId: number): Observable<TauxUsure[]> {
     const headers = this.auth.getAuthHeaders();
-    return this.http.get<TauxUsure[]>(`http://localhost:3331/api/tauxUsure/listeParCategorie/${catId}`, { headers }).pipe(
+    return this.http.get<TauxUsure[]>(`https://backendsimteg-production.up.railway.app/api/tauxUsure/listeParCategorie/${catId}`, { headers }).pipe(
       catchError((error) => this.handleError(error, 'Erreur lors de la récupération des taux d\'usure.'))
     );
   }
