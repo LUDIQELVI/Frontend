@@ -15,7 +15,7 @@ import {
   providedIn: 'root'
 })
 export class SimulationService {
-  private readonly rootUrl = 'https://backendsimteg-production.up.railway.app/api';
+  private readonly rootUrl = 'https://backendsimteg-production.up.railway.app/api/simulation';
   private simulationCreatedSubject = new Subject<Simulation>();
   simulationCreated$ = this.simulationCreatedSubject.asObservable();
 
