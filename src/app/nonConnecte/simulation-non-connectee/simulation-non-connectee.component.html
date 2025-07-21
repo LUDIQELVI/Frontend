@@ -1,4 +1,4 @@
-<app-header></app-header>
+simulation-non: <app-header></app-header>
 
 <mat-card class="simulation-card">
   <mat-card-title class="title-blue">Simulation de {{ category?.nomCategorie || 'Crédit' }}</mat-card-title>
@@ -116,45 +116,61 @@
         </div>
       </div>
 
-      <!-- Déblocages -->
-      <div class="form-section">
-        <h3 class="section-title">Déblocages</h3>
-        <button type="button" class="add-button" (click)="addDeblocage()" aria-label="Ajouter un nouveau déblocage">
-          Ajouter un déblocage
+     <!-- Déblocages -->
+<div class="form-section">
+  <h3 class="section-title">Déblocages</h3>
+  <button type="button" class="add-button" (click)="addDeblocage()" aria-label="Ajouter un nouveau déblocage">
+    Ajouter un déblocage
+  </button>
+
+  <div class="form-grid deblocage-grid">
+    <ng-container formArrayName="deblocages">
+      <div *ngFor="let deblocage of deblocages.controls; let i=index" [formGroupName]="i" class="deblocage-group">
+
+        <!-- Date de déblocage -->
+        <mat-form-field appearance="outline">
+          <mat-label>Date de déblocage {{ i + 1 }}</mat-label>
+          <input matInput [matDatepicker]="pickerDeblocage" formControlName="dateDeblocage" [min]="minDate" placeholder="jj/mm/aaaa">
+          <mat-datepicker-toggle matSuffix [for]="pickerDeblocage"></mat-datepicker-toggle>
+          <mat-datepicker #pickerDeblocage></mat-datepicker>
+          <mat-icon matSuffix matTooltip="Date à laquelle une partie du prêt est débloquée">info</mat-icon>
+          <mat-error *ngIf="deblocage.get('dateDeblocage')?.hasError('required')">Champ requis</mat-error>
+        </mat-form-field>
+
+        <!-- Montant -->
+        <mat-form-field appearance="outline">
+          <mat-label>Montant (FCFA)</mat-label>
+          <input matInput type="number" formControlName="montant" placeholder="Montant en FCFA">
+          <span class="formatted-amount" *ngIf="deblocage.get('montant')?.value">
+            {{ formatNumber(deblocage.get('montant')?.value) }} FCFA
+          </span>
+          <mat-icon matSuffix matTooltip="Montant débloqué à cette date">info</mat-icon>
+          <mat-error *ngIf="deblocage.get('montant')?.hasError('required')">Champ requis</mat-error>
+          <mat-error *ngIf="deblocage.get('montant')?.hasError('min')">Montant minimum : 1 FCFA</mat-error>
+        </mat-form-field>
+
+        <!-- Supprimer -->
+        <button mat-icon-button color="warn" (click)="removeDeblocage(i)" matTooltip="Supprimer ce déblocage" aria-label="Supprimer ce déblocage" type="button">
+          <mat-icon>delete</mat-icon>
         </button>
-        <div class="form-grid deblocage-grid">
-          <ng-container formArrayName="deblocages">
-            <div *ngFor="let deblocage of deblocages.controls; let i=index" [formGroupName]="i" class="deblocage-group">
-              <mat-form-field appearance="outline">
-                <mat-label>Date de déblocage {{ i + 1 }}</mat-label>
-                <input matInput [matDatepicker]="pickerDeblocage" formControlName="dateDeblocage" [min]="minDate" placeholder="jj/mm/aaaa">
-                <mat-datepicker-toggle matSuffix [for]="pickerDeblocage"></mat-datepicker-toggle>
-                <mat-datepicker #pickerDeblocage></mat-datepicker>
-                <mat-icon matSuffix matTooltip="Date à laquelle une partie du prêt est débloquée">info</mat-icon>
-                <mat-error *ngIf="deblocages.errors?.['invalidDeblocageDate'] && i === 0">
-  La date de chaque déblocage doit être antérieure à la date de première échéance.
-</mat-error>
-
-              </mat-form-field>
-
-              <mat-form-field appearance="outline">
-                <mat-label>Montant (FCFA)</mat-label>
-                <input matInput type="number" formControlName="montant" placeholder="Montant en FCFA">
-                <span class="formatted-amount" *ngIf="deblocage.get('montant')?.value">
-                  {{ formatNumber(deblocage.get('montant')?.value) }} FCFA
-                </span>
-                <mat-icon matSuffix matTooltip="Montant débloqué à cette date">info</mat-icon>
-                <mat-error *ngIf="deblocage.get('montant')?.hasError('required')">Champ requis</mat-error>
-                <mat-error *ngIf="deblocage.get('montant')?.hasError('min')">Montant minimum : 1 FCFA</mat-error>
-              </mat-form-field>
-
-              <button mat-icon-button color="warn" (click)="removeDeblocage(i)" matTooltip="Supprimer ce déblocage" aria-label="Supprimer ce déblocage" type="button">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          </ng-container>
-        </div>
       </div>
+    </ng-container>
+  </div>
+
+  <!-- Gestion des erreurs -->
+  <div class="error-zone">
+    <mat-error *ngIf="simulationForm.get('deblocages')?.errors?.['invalidDeblocageDate']">
+      La date de chaque déblocage doit être antérieure à la date de première échéance.
+    </mat-error>
+    <mat-error *ngIf="simulationForm.get('deblocages')?.errors?.['sommeInferieure']">
+      La somme des montants débloqués est inférieure au montant emprunté.
+    </mat-error>
+    <mat-error *ngIf="simulationForm.get('deblocages')?.errors?.['sommeSuperieure']">
+      La somme des montants débloqués dépasse le montant emprunté.
+    </mat-error>
+  </div>
+</div>
+
 
       <mat-error *ngIf="errorMessage" class="error-message">{{ errorMessage }}</mat-error>
 
