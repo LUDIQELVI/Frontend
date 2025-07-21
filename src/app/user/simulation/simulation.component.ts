@@ -65,15 +65,16 @@ export class SimulationComponent implements OnInit {
 
   frequenceOptions: string[] = ['MENSUELLE', 'TRIMESTRIALITE', 'ANNUELLE'];
  typeEmprunteurOptions: string[] = [
-    'ADMINISTRATIONS_PUBLIQUES',
-    'SOCIETES_NON_FINANCIERES_PUBLIQUES',
+    'PARTICULIER',
     'GRANDE_ENTREPRISE',
     'PME',
+    'ADMINISTRATIONS_PUBLIQUES',
+    'SOCIETES_NON_FINANCIERES_PUBLIQUES',
     'SOCIETES_ASSURANCE',
     'AUTRES_SOCIETES_FINANCIERES',
     'MENAGES',
     'INSTITUTIONS_SANS_BUT_LUCRATIF',
-    'PARTICULIER'
+
 ];
 
   minDate: Date = new Date();
@@ -136,40 +137,23 @@ export class SimulationComponent implements OnInit {
   }
 
   private deblocageValidator(): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    const deblocages = control.value as any[];
-    const montantTotal = this.simulationForm?.get('montant')?.value;
+    return (control: AbstractControl) => {
+      const deblocages = control.value as any[];
+      const dateDebut = this.simulationForm?.get('dateDebut')?.value;
+      if (!dateDebut || !deblocages.length) return null;
 
-    if (!montantTotal || !deblocages || deblocages.length === 0) return null;
-
-    const sommeDebloquee = deblocages.reduce((sum, d) => sum + (d.montant || 0), 0);
-
-    if (sommeDebloquee < montantTotal) {
-      return { sommeInferieure: true };
-    }
-
-    if (sommeDebloquee > montantTotal) {
-      return { sommeSuperieure: true };
-    }
-
-    // Vérifie aussi les dates
-    const dateDebut = this.simulationForm?.get('dateDebut')?.value;
-    if (!dateDebut) return null;
-
-    const dateDebutTime = new Date(dateDebut).getTime();
-    for (const d of deblocages) {
-      if (d.dateDeblocage) {
-        const dTime = new Date(d.dateDeblocage).getTime();
-        if (dTime >= dateDebutTime) {
-          return { invalidDeblocageDate: true };
+      const dateDebutTime = new Date(dateDebut).getTime();
+      for (const d of deblocages) {
+        if (d.dateDeblocage) {
+          const dTime = new Date(d.dateDeblocage).getTime();
+          if (dTime >= dateDebutTime) {
+            return { invalidDeblocageDate: true };
+          }
         }
       }
-    }
-
-    return null;
-  };
-}
-
+      return null;
+    };
+  }
 
 
   formatNumber(value: number | null): string {
@@ -238,74 +222,61 @@ export class SimulationComponent implements OnInit {
     }
   }
 
- simulateCredit(): void {
-  this.simulationForm.markAllAsTouched();
+  simulateCredit(): void {
+    this.simulationForm.markAllAsTouched();
 
-  const deblocagesControl = this.simulationForm.get('deblocages');
-  const errors = deblocagesControl?.errors;
-
-  if (this.simulationForm.invalid) {
-    if (errors?.['invalidDeblocageDate']) {
-      this.errorMessage = 'La date de déblocage doit être antérieure à la date de première échéance.';
-    } else if (errors?.['sommeInferieure']) {
-      this.errorMessage = 'La somme des déblocages est inférieure au montant emprunté. Veuillez ajouter un autre déblocage.';
-    } else if (errors?.['sommeSuperieure']) {
-      this.errorMessage = 'La somme des déblocages dépasse le montant emprunté. Veuillez réduire un ou plusieurs montants.';
-    } else {
-      this.errorMessage = 'Veuillez corriger les erreurs du formulaire.';
+    if (this.simulationForm.invalid || this.simulationForm.get('deblocages')?.errors?.['invalidDeblocageDate']) {
+      this.errorMessage = 'Entrez les bonnes informations dans votre simulateur. La date de déblocage doit être avant la date de première échéance.';
+      return;
     }
-    return;
-  }
 
-  this.isLoading = true;
-  this.errorMessage = null;
+    this.isLoading = true;
+    this.errorMessage = null;
+    const formValue = this.simulationForm.getRawValue();
+    const categoryId = +this.route.snapshot.queryParams['categoryId'] || 2;
 
-  const formValue = this.simulationForm.getRawValue();
-  const categoryId = +this.route.snapshot.queryParams['categoryId'] || 2;
-
-  let dureeReelle = formValue.duree;
-  switch (formValue.frequence?.toUpperCase()) {
-    case 'MENSUELLE':
-      dureeReelle = formValue.duree / 12;
-      break;
-    case 'TRIMESTRIALITE':
-      dureeReelle = formValue.duree / 4;
-      break;
-    case 'ANNUELLE':
-    default:
-      break;
-  }
-
-  const request: SimulationDtoRequest = {
-    categorieCreditId: categoryId,
-    montantEmprunte: formValue.montant,
-    duree: dureeReelle,
-    datePremiereEcheance: new Date(formValue.dateDebut).toISOString().split('T')[0],
-    frequence: formValue.frequence.toUpperCase(),
-    tauxInteretNominal: formValue.tauxNominal,
-    typeEprunteur: formValue.typeEmprunteur,
-    fraisList: formValue.fraisObligatoires,
-    assuranceList: formValue.assurancesObligatoires,
-    tableauDeblocages: formValue.deblocages.map((d: any, i: number) => ({
-      dateDeblocage: new Date(d.dateDeblocage).toISOString().split('T')[0],
-      montant: d.montant,
-      numero: i + 1
-    }))
-  };
-
-  this.simService.calculer(request).subscribe({
-    next: (res) => {
-      this.simulationResult = res;
-      this.openResultDialog(request);
-      this.isLoading = false;
-    },
-    error: (err) => {
-      this.errorMessage = err.message || 'Erreur lors de la simulation.';
-      this.isLoading = false;
+    let dureeReelle = formValue.duree;
+    switch (formValue.frequence?.toUpperCase()) {
+      case 'MENSUELLE':
+        dureeReelle = formValue.duree / 12;
+        break;
+      case 'TRIMESTRIALITE':
+        dureeReelle = formValue.duree / 4;
+        break;
+      case 'ANNUELLE':
+      default:
+        break;
     }
-  });
-}
 
+    const request: SimulationDtoRequest = {
+      categorieCreditId: categoryId,
+      montantEmprunte: formValue.montant,
+      duree: dureeReelle,
+      datePremiereEcheance: new Date(formValue.dateDebut).toISOString().split('T')[0],
+      frequence: formValue.frequence.toUpperCase(),
+      tauxInteretNominal: formValue.tauxNominal,
+      typeEprunteur: formValue.typeEmprunteur,
+      fraisList: formValue.fraisObligatoires,
+      assuranceList: formValue.assurancesObligatoires,
+      tableauDeblocages: formValue.deblocages.map((d: any, i: number) => ({
+        dateDeblocage: new Date(d.dateDeblocage).toISOString().split('T')[0],
+        montant: d.montant,
+        numero: i + 1
+      }))
+    };
+
+    this.simService.calculer(request).subscribe({
+      next: (res) => {
+        this.simulationResult = res;
+        this.openResultDialog(request);
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.errorMessage = err.message || 'Erreur lors de la simulation.';
+        this.isLoading = false;
+      }
+    });
+  }
 
   private openResultDialog(request: SimulationDtoRequest): void {
     this.dialog.open(SimulationResultModalComponent, {

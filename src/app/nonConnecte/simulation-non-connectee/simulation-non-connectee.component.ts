@@ -66,15 +66,16 @@ export class SimulationNonConnecteeComponent implements OnInit {
 
   frequenceOptions: string[] = ['MENSUELLE', 'TRIMESTRIALITE', 'ANNUELLE'];
   typeEmprunteurOptions: string[] = [
+      'PARTICULIER',
+   'GRANDE_ENTREPRISE',
+    'PME',
     'ADMINISTRATIONS_PUBLIQUES',
     'SOCIETES_NON_FINANCIERES_PUBLIQUES',
-    'GRANDE_ENTREPRISE',
-    'PME',
     'SOCIETES_ASSURANCE',
     'AUTRES_SOCIETES_FINANCIERES',
     'MENAGES',
     'INSTITUTIONS_SANS_BUT_LUCRATIF',
-    'PARTICULIER'
+
   ];
 
   minDate: Date = new Date();
